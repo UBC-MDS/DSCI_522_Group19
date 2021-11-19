@@ -22,7 +22,7 @@ To set up the necessary packages for running the data analysis materials from wi
 Then create a Python virtual environment by using `conda` with the environment file you just downloaded:
 
 ```
-conda env create --file environment.yaml
+conda env create --file env-wine-prediction.yaml
 ```
   
 ## License
