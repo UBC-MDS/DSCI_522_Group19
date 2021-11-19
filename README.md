@@ -13,9 +13,19 @@ Wine Quality Score Predictor is our Data analysis project for DSCI 522.
   To answer the predictive question posed above, we plan to build a predictive classification model. As the first step towards building the model we will split the data into train and test data set(split 80%, 20%).Then perform exploratory data analysis to determine and analyze the distribution of the features and correlation of features(physicochemical properties) with target classs(quality). 
 
   Thus far we have performed exploratory data analysis, and the report can be found [here](https://github.com/UBC-MDS/DSCI_522_Group19_Wine_Quality_Score_Predictor/blob/main/src/Wine_Score_EDA.ipynb).
+
+## Usage
+
+To set up the necessary packages for running the data analysis materials from wine score prediction,
+[download the environment file from the repo to your computer](https://github.com/UBC-MDS/DSCI_522_Group19_Wine_Quality_Score_Predictor/blob/main/env-wine-prediction.yaml)
+(hit "Raw" and then `Ctrl` + `s` to save it, or copy paste the content).
+Then create a Python virtual environment by using `conda` with the environment file you just downloaded:
+
+```
+conda env create --file environment.yaml
+```
   
-  
-# License
+## License
 
 Datasets of this project are licensed under a Creative Commons Attribution 4.0 International (CC BY 4.0) license. This allows for the sharing and adaptation of the datasets for any purpose, provided that the appropriate credit is given.
 
