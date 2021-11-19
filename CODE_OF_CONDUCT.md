@@ -20,7 +20,7 @@ Examples of unacceptable behavior by participants include:
 
 * Harassment of participants in any form
 * Insulting comments
-* Other unethical or unprofessional 
+* Other unethical or unprofessional conduct
 
 ## Our Responsibilities
 
