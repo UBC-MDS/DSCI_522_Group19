@@ -20,9 +20,9 @@ Wine Quality Score Predictor is our Data analysis project for DSCI 522.
   
   Following the `ColumnTransformer` process, we will dive deep into the class imbalance issue we figured out in the EDA process and add class_weight argument in the model. We will attempt to utilize three different models to fit the training data set. The tentative plan is to use decision tree, SVC, and KNN methodology. By applying cross-validation techniques and comparing validation and train scores, we are going to select the most well-performed model and conduct hyper-parameter optimization accordingly. 
   
-  Also, we will use different matrix the evaluate our model. For example, we may consider to use confusion matrix to mainly assess the precision score, because we would like to make sure the model will catch good wine among all predicted good wine. Because if the user of our model, accidentally buy a poor wine 
+  Also, we will use different matrix the evaluate our model. For example, we may consider to use confusion matrix to mainly assess the precision score, because we would like to make sure the model will catch good wine among all predicted good wine. Because if the user of our model, accidentally buy a predicted good wine, but actually it is a poor one, the they may lose a lot of money. 
   
-  After tuning the model, we will ready to use test data set to do the final check of the accuracy. If the result is not satisfactory, we will make more adjustments based on the new issue. 
+  After tuning the model, we will ready to use test data set to do the final check of the accuracy. If the result is not satisfactory, we will make further adjustments based on the new issue found. 
   
 ## Usage
 
