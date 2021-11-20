@@ -14,7 +14,7 @@ To answer the predictive question posed above, we plan to build a predictive cla
 
 Thus far we have performed exploratory data analysis, and the report can be found [here](https://github.com/UBC-MDS/DSCI_522_Group19_Wine_Quality_Score_Predictor/blob/main/src/Wine_Score_EDA.ipynb).
   
-## Anlaysis Plan
+## Analysis Plan
 
 For this project, we will use supervised learning techniques to approach our research problem. After exploring the data set through proper EDA, we decide to use `StandardScaler` to transform all numeric features since the variation of those features are quite high. For the one binary feature we made from the two data sets, we are going to use `OneHotEncoder` with `drop="if_binary"` argument to create one column for the "type" feature.
   
