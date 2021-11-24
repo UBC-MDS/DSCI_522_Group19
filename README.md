@@ -6,34 +6,69 @@ Wine Quality Score Predictor is our data analysis project for the 2021-22 UBC MD
 
 ## Introduction
 
-In this project, we aim to predict the wine taste preferences as quality scores ranging from 0 to 10 based on physicochemical properties of the wines and sensory tests. This model is useful to support wine tasting evaluations. Quality evaluation is part of wine certification process and can be used to improve wine making and classify wines to premium brands which can be useful for setting prices and for marketing purposes based on consumer tastes. It should be noted that using taste as a sensory measurement for wine quality could be quite unreliable. We are also interested in exploring how much output data could depend on other sensory information such as color of wine. Potentially, human brain could be processing taste and visual information differently rather than taste only. Thus, this project aims to predict quality score based on features provided. 
+In this project, the aim of this project is to predict the quality of wine on a scale of 0 to 10 given a set of physiochemical features rated by wine test reviewers as inputs. This model is useful to support wine tasting evaluations. Quality evaluation is part of wine certification process and can be used to improve wine making and classify wines to premium brands which can be useful for setting prices and for marketing purposes based on consumer tastes.
 
-The data set for this project is related to red and white vinho verde wine samples, from Portugal, created by P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis. It is sourced from the UCI Machine Learning Repository and can be found [here](https://archive.ics.uci.edu/ml/datasets/wine+quality). Each row in the data set represents label of wine (red or white) and its physicochemical properties which includes fixed acidity, volatile acidity, citric acid, residual sugar, chlorides, free sulfur dioxide, total sulfur dioxide, density, pH, and sulphates. Due to privacy and logistic issues, only physicochemical (inputs) and sensory (the output) variables are available, and as for instance, there is no data about grape types, wine brand, and wine selling price.
+The data set for this project is related to red and white vinho verde wine samples, from Portugal, created by P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis. It is sourced from the UCI Machine Learning Repository and can be found [here](https://archive.ics.uci.edu/ml/datasets/wine+quality). Each row in the data set represents label of wine (red or white) and its physicochemical properties which includes fixed acidity, volatile acidity, citric acid, residual sugar, chlorides, free sulfur dioxide, total sulfur dioxide, density, pH, and sulphates.
 
-To answer the predictive question posed above, we plan to build a predictive classification model. As the first step towards building the model we will split the data into train and test data set(split at 80% and 20% level). Then we perform exploratory data analysis to analyze the distribution of each feature and correlation between features and the target (wine scores ranging from 0 to 10).
+We built a regression model using Ridge, Logistic Regression, SVC, and Random Forest. Running through the cross-validation, we found the Random Forest delivers a much higher training score,but there was a clear case of overfitting issue. We then ran hyperparameter optimization in an attempt to improve the model. Unfortunately, the test score with the best hyperparameters was only around xxxxx. By analyzing feature coefficients and we can obtain XXXX feature had the highest coefficient score, which was expected from our initial [EDA] (https://github.com/UBC-MDS/DSCI_522_Group19_Wine_Quality_Score_Predictor/blob/main/src/Wine_Score_EDA.ipynb) In the coming weeks, we intend to refine our model further and come out a higher test score if possible. **some contents here are placeholder**
 
-Thus far we have performed exploratory data analysis, and the report can be found [here](https://github.com/UBC-MDS/DSCI_522_Group19_Wine_Quality_Score_Predictor/blob/main/src/Wine_Score_EDA.ipynb).
-  
-## Analysis Plan
+## Report
 
-For this project, we will use supervised learning techniques to approach our research problem. After exploring the data set through proper EDA, we decide to use `StandardScaler` to transform all numeric features since the variation of those features are quite high. For the one binary feature we made from the two data sets, we are going to use `OneHotEncoder` with `drop="if_binary"` argument to create one column for the "type" feature.
-  
-Following the `ColumnTransformer` process, we will dive deep into the class imbalance issue we figured out in the EDA process and add class_weight argument in the model. We will attempt to utilize three different models to fit the training data set. The tentative plan is to use Logistic Regression, SVC, SVR and KNN methodology. By applying cross-validation techniques and comparing validation and train scores, we are going to select the most well-performed model and conduct hyper-parameter optimization accordingly. 
-  
-  Also, we will use different matrix the evaluate our model. For example, we may consider to use confusion matrix to mainly assess the precision score, because we would like to make sure the model will catch good wine among all predicted good wine. Because if the user of our model, accidentally buy a predicted good wine, but actually it is a poor one, the they may lose a lot of money. 
-  
-  After tuning the model, we will ready to use test data set to do the final check of the accuracy. If the result is not satisfactory, we will make further adjustments based on the new issue found. 
+The final report can be here found [here] (https://github.com/UBC-MDS/DSCI_522_Group19_Wine_Quality_Score_Predictor/tree/main/doc)
+
   
 ## Usage
+
+To replicate the analysis, clone this GitHub repository, install the
+[dependencies](#dependencies) listed below, and run the following
+commands at the command line/terminal from the root directory of this
+project: 
+
+```
+# download wine data set to directory
+python src/download_data.py --url="https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv" --out_file="data/winequality-red.csv"
+python src/download_data.py --url="https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv" --out_file="data/winequality-white.csv"
+
+
+# pre-process data and split data to training set and test set
+
+
+# create exploratory data analysis figure and write to file
+
+
+# fitting model
+
+
+# test model
+
+
+
+# render final report (RStudio terminal)
+Rscript -e "rmarkdown::render('reports/reports.Rmd', output_format = 'github_document')"
+
+```
+
+## Dependencies
+
+To run this project, please install 
+
+* Python version 3.8.6 and the required dependencies from [here](https://github.com/UBC-MDS/DSCI_522_Group19_Wine_Quality_Score_Predictor/blob/main/env-wine-prediction.yaml) by running the following command at the command line/terminal
 
 To set up the necessary packages for running the data analysis materials from wine score prediction,
 [download the environment file from the repo to your computer](https://github.com/UBC-MDS/DSCI_522_Group19_Wine_Quality_Score_Predictor/blob/main/env-wine-prediction.yaml)
 (hit "Raw" and then `Ctrl` + `s` to save it, or copy paste the content).
 Then create a Python virtual environment by using `conda` with the environment file you just downloaded:
 
-```
+```bash
+# create a conda environment using the `wine_env.yml`
 conda env create --file env-wine-prediction.yaml
+conda activate wine_env
 ```
+
+* R version 4.0.2. and R packages:
+ - knitr==1.30
+ - kableExtra==1.3.1
+ - tidyverse==1.3.0
   
 ## License
 
