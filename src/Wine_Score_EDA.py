@@ -1,14 +1,12 @@
-#!/usr/bin/env python
-# coding: utf-8
 
-"""Loads train dataset
-creates figures as part of exploratory data analysis
+"""
+Script for creating plots as part of exploratory data analysis
 
 Usage: Wine_Score_EDA.py --input_file=<train_df>
 
 Options: 
   
---input_file=<train_df>           Path (including filename) to processed data with "train_df"
+--input_file=<train_df> Path (including filename) to processed data with "train_df"
 
 """
 
@@ -38,13 +36,16 @@ def read_file(input_file):
 
 
 def figures(train_df):
+  #create quality figure distribution
   quality_fig = alt.Chart(train_df).mark_bar().encode(
     x=alt.X('quality', bin=alt.Bin(maxbins=7)),
     y='count()',
     tooltip='count()')
-    
+  
+  #save quality_dist plot to results folder 
   save(quality_fig, "results/quality_dist.png")
-
+  
+  #create feature distribution
   repeat_plots = (alt.Chart(train_df).mark_bar().encode(
     alt.X(alt.repeat(), type="quantitative", bin=alt.Bin(maxbins=40)),
     y="count()",
@@ -56,8 +57,45 @@ def figures(train_df):
       ),
       columns=3
       ))
+
+  #save feature count distribution plot to results folder
   save(repeat_plots, "results/repeat_plots.png")
-  return quality_fig, repeat_plots
+  
+  cor_data = (
+    train_df.corr()
+    .stack()
+    .reset_index()
+    .rename(columns={0: "correlation", "level_0": "variable", "level_1": "variable2"})
+    )
+
+  cor_data["correlation_label"] = cor_data["correlation"].map(
+      "{:.2f}".format
+  )  # Round to 2 decimal
+  
+  base = alt.Chart(cor_data).encode(x="variable2:O", y="variable:O")
+  
+  text = base.mark_text().encode(
+      text="correlation_label",
+      color=alt.condition(
+          alt.datum.correlation > 0.5, alt.value("white"), alt.value("black")
+      ),
+  )
+  
+  cor_plot = base.mark_rect().encode(
+      alt.Color("correlation:Q", scale=alt.Scale(domain=(-1, 1), scheme="purpleorange"))
+  )
+  
+  cor_plot = (
+      (cor_plot + text)
+      .properties(height=600, width=600)
+      .configure_axis(labelFontSize=16)
+      .configure_legend(titleFontSize=15)
+  )
+
+
+  save(cor_plot, "results/cor_plot.png")
+
+  return quality_fig, repeat_plots, cor_plot
     
 if __name__ == "__main__":
   main(opt['--input_file'])
