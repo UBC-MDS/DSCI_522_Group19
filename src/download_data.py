@@ -20,6 +20,18 @@ from docopt import docopt
 opt = docopt(__doc__)  # parse these into dictionary opt
 
 def main(url, out_file):
+    """Take the url, download the data from the url and save as .csv file.
+
+    Parameters:
+    url (str): the raw url of the data set in a csv format 
+    out_file (str):  Path (including the filename) of where to write the file with downloaded data locally
+
+    Returns:
+
+    Example:
+    main("https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv", "data/red_wine.csv")
+
+    """
     # red wine url: url_file= "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv"
     # white wine url: url_file = "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv"
     # red wine output file: out_red = "../data/raw/winequality-red.csv"
