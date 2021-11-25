@@ -60,9 +60,9 @@ To set up the necessary packages for running the data analysis materials from wi
 Then create a Python virtual environment by using `conda` with the environment file you just downloaded:
 
 ```bash
-# create a conda environment using the `wine_env.yml`
-conda env create --file env-wine-prediction.yaml
-conda activate wine_env
+# create a conda environment using the `wine.yaml`
+conda env create --file wine.yaml
+conda activate wine
 ```
 
 * R version 4.0.2. and R packages:
