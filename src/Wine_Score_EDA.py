@@ -14,7 +14,7 @@ Options:
 """
 
 # Example:
-# python Wine_Score_EDA.py.py --input_red=../data/winequality-red.csv --input_white=../data/winequality-white.csv
+# python src/Wine_Score_EDA.py --input_red=data/winequality-red.csv --input_white=data/winequality-white.csv
 
 
 
@@ -52,7 +52,7 @@ def figures(train_df):
     y='count()',
     tooltip='count()')
     
-  save(quality_fig, "../results/quality_dist.png")
+  save(quality_fig, "results/quality_dist.png")
 
   repeat_plots = (alt.Chart(train_df).mark_bar().encode(
     alt.X(alt.repeat(), type="quantitative", bin=alt.Bin(maxbins=40)),
@@ -65,7 +65,7 @@ def figures(train_df):
       ),
       columns=3
       ))
-  save(repeat_plots, "../results/repeat_plots.png")
+  save(repeat_plots, "results/repeat_plots.png")
   return quality_fig, repeat_plots
     
 if __name__ == "__main__":
