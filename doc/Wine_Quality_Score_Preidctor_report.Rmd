@@ -51,11 +51,15 @@ After tuning the model, we will ready to use test data set to do the final check
 
 After splitting our dataset into a training set and a validation set we plotted the distribution of the quality scores for each wine (Figure 1). Despite the quality scoring being performed a scale from 1-10 only values in the range of 3-9 were observed. It can be seen that our data is significantly imbalanced, with 6 being the most common score observed across all testing while scores such as 3 and 9 were rarely seen.
 
-```{r fig_1, echo=FALSE, fig.cap="Figure 1. Data distribution of numeric features in training datasets.", out.width = '90%'}
+```{r fig_1, echo=FALSE, fig.cap="Figure 1. Distribution of quality scores", out.width = '30%'}
+knitr::include_graphics("../results/quality_dist.png")
+```
+
+```{r fig_2, echo=FALSE, fig.cap="Figure 2. Data distribution of numeric features in training datasets.", out.width = '100%'}
 knitr::include_graphics("../results/repeat_plots.png")
 ```
 
-```{r fig_2, echo=FALSE, fig.cap="Figure 2. Quality distribution of wines in the training and test datasets.", out.width = '90%'}
+```{r fig_3, echo=FALSE, fig.cap="Figure 3. Quality distribution of wines in the training and test datasets.", out.width = '90%'}
 knitr::include_graphics("../results/placeholder.png")
 ```
 
