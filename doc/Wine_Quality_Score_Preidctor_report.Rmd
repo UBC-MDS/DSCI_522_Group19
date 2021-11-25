@@ -59,8 +59,8 @@ knitr::include_graphics("../results/quality_dist.png")
 knitr::include_graphics("../results/repeat_plots.png")
 ```
 
-```{r fig_3, echo=FALSE, fig.cap="Figure 3. Quality distribution of wines in the training and test datasets.", out.width = '90%'}
-knitr::include_graphics("../results/placeholder.png")
+```{r fig_3, echo=FALSE, fig.cap="Figure 3. Quality distribution of wines in the training and test datasets.", out.width = '60%'}
+knitr::include_graphics("../results/cor_plot.png")
 ```
 
 ```{r table_1, echo=FALSE, out.width = '60%'}
@@ -73,7 +73,7 @@ knitr::include_graphics("../results/placeholder.png")
 ```{r table_3, echo=FALSE, out.width = '60%'}
 ```
 
-```{r fig_2, echo=FALSE, fig.cap="Figure 2. Bar chart showing the target weights of different features of our RandomForestRegressor model.", out.width = '40%'}
+```{r fig_4, echo=FALSE, fig.cap="Figure 2. Bar chart showing the target weights of different features of our RandomForestRegressor model.", out.width = '40%'}
 ```
 
 ```{r table_4, echo=FALSE, out.width = '60%'}
