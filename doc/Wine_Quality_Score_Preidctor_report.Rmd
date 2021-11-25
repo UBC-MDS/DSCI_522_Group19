@@ -1,0 +1,83 @@
+---
+title: "Predicting wine quality score from various characteristics"
+author: "Group 19 : Kingslin Lv, Manju Neervaram Abhinandana Kumar, Zack Tang, Paval Levchenko"
+bibliography: references_wine_score_predictor.bib
+output:
+  html_document:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(feather)
+library(arrow)
+library(knitr)
+
+# path <- "../results/tuned_crossval_results.feather"
+# df <- read_feather(path)
+```
+
+## Summary
+
+In this project we aim to predict the wine taste preferences as quality scores ranging from 0 to 10 based on physicochemical properties of the wines and sensory tests. Here we tried 4 regression models including ridge, logistic regression, random forest, and SVC to predict the wine quality score. Running through the cross-validation, we found the Random Forest delivers a much higher training score,but there was a clear case of overfitting issue. We then ran hyperparameter optimization in an attempt to improve the model. Unfortunately, the test score with the best hyperparameters was only around xxxxx. By analyzing feature coefficients and we can obtain XXXX feature had the highest coefficient score, which was expected from our initial.
+
+## Introduction
+
+The wine industry shows a recent extensive growth and the industry experts are using product quality certifications to promote their products[@orth2001quality]. This is a time-consuming process and requires the assessment given by human experts, which makes this process very expensive. The wine market would be of interest if the human quality of tasting can be related to wine's chemical properties so that quality assessment processes are more controlled. This project aims to build up a machine learning model for purpose of predicting the wine quality score based on specific chemical properties of each beverage. This task will likely require a lot of domain knowledge and according to a paper published by Dr. P. Cortez, Dr. A. Cerdeira, Dr. F. Almeida, Dr. T. Matos and Dr. J. Reis they were able to demonstrate the results of a data mining approach had promising results compared to alternative neural network methods [@CORTEZ2009547],[@misc_wine_quality_186].
+
+This model is useful to support wine tasting evaluations. Quality evaluation is part of wine certification process and can be used to improve wine making and classify wines to premium brands which can be useful for setting prices and for marketing purposes based on consumer tastes. It should be noted that using taste as a sensory measurement for wine quality could be quite unreliable. We are also interested in exploring how much output data could depend on other sensory information such as color of wine. Potentially, human brain could be processing taste and visual information differently rather than taste only. Thus, we are not expecting to obtain a really high test score.
+
+# Methods
+
+## Data
+
+The dataset used in this project was retrieved from the University of California Irvine (UCI) machine learning repository [@Dua2019] and was collected by Paulo Cortez, University of Minho, Guimarães, Portugal and A. Cerdeira, F. Almeida, T. Matos with help from J. Reis, Viticulture Commission of the Vinho Verde Region(CVRVV), Porto, Portugal in 2009. This dataset contains the results of various physiochemical test (including scoring for properties such as alcohol content, pH, and residual sugar) which were preformed on white "Vinho Verde" wine samples from Northern Portugal. The data used in our analysis can be found [here](https://archive.ics.uci.edu/ml/datasets/wine+quality). No additional features or specific branding of each wine is available in the dataset for privacy purposes. Each row in the dataset represents a single wine which was tested and scored based on human sensory data.
+
+To answer the predictive question posed above, we plan to build a predictive classification model. As the first step towards building the model we will split the data into train and test data set(split at 80% and 20% level). Then we perform exploratory data analysis to analyze the distribution of each feature and correlation between features and the target (wine scores ranging from 0 to 10).
+
+## Analysis
+
+A regression model was built with python scripts using the sk-learn `RandomForestRegressor` algorithm and allowed us to predict a sensory score based on the physiochemical testing information recorded for each wine[@Python], [@scikit-learn]. Due to privacy constraints the dataset is somewhat limited in scope. This means that factors that could potentially influence the scoring of each wine such as grape types, brand names, and price have been omitted. Assumptions made regarding this dataset are that the quality scores came from the opinions of wine critics and that testing for all wines was consistent. It is unclear what information the wine critics had access to when assessing each wine (i.e. if scoring was done with a blind taste test or if the judges were aware of factors such as the price of each wine). All models built in our analysis were fit using all of the variables from the dataset. Hyperparameters `n_estimators` and `max_depth` were optimized via random search while all other hyperparameters used the default sklearn `RandomForestRegressor` values. The data was processed using the pandas package and EDA was performed using the pandas-profiling package [@reback2020pandas] [@pandasprofiling2019]. This document was compiled using an R document file with scripts run using the docopt package [@R], [@docopt]. Tables were stored using feather files (with dependency on arrow) and displayed using knitr's kable function [@feather], [@arrow], [@knitr]. This document was compiled using rmarkdown [@rmarkdown].
+
+For this project, we will use supervised learning techniques to approach our research problem. After exploring the data set through proper EDA, we decide to use `StandardScaler` to transform all numeric features since the variation of those features are quite high. For the one binary feature we made from the two data sets, we are going to use `OneHotEncoder` with `drop="if_binary"` argument to create one column for the "type" feature.
+
+Following the `ColumnTransformer` process, we will dive deep into the class imbalance issue we figured out in the EDA process and add class_weight argument in the model. We will attempt to utilize three different models to fit the training data set. The tentative plan is to use Logistic Regression, SVC, SVR and KNN methodology. By applying cross-validation techniques and comparing validation and train scores, we are going to select the most well-performed model and conduct hyper-parameter optimization accordingly.
+
+Also, we will use different matrix the evaluate our model. For example, we may consider to use confusion matrix to mainly assess the precision score, because we would like to make sure the model will catch good wine among all predicted good wine. Because if the user of our model, accidentally buy a predicted good wine, but actually it is a poor one, the they may lose a lot of money.
+
+After tuning the model, we will ready to use test data set to do the final check of the accuracy. If the result is not satisfactory, we will make further adjustments based on the new issue found.
+
+# Results & Discussion
+
+After splitting our dataset into a training set and a validation set we plotted the distribution of the quality scores for each wine (Figure 1). Despite the quality scoring being performed a scale from 1-10 only values in the range of 3-9 were observed. It can be seen that our data is significantly imbalanced, with 6 being the most common score observed across all testing while scores such as 3 and 9 were rarely seen.
+
+```{r fig_1, echo=FALSE, fig.cap="Figure 1. Data distribution of numeric features in training datasets.", out.width = '90%'}
+knitr::include_graphics("../results/repeat_plots.png")
+```
+
+```{r fig_2, echo=FALSE, fig.cap="Figure 2. Quality distribution of wines in the training and test datasets.", out.width = '90%'}
+knitr::include_graphics("../results/placeholder.png")
+```
+
+```{r table_1, echo=FALSE, out.width = '60%'}
+```
+
+```{r table_2, echo=FALSE, out.width = '60%'}
+
+```
+
+```{r table_3, echo=FALSE, out.width = '60%'}
+```
+
+```{r fig_2, echo=FALSE, fig.cap="Figure 2. Bar chart showing the target weights of different features of our RandomForestRegressor model.", out.width = '40%'}
+```
+
+```{r table_4, echo=FALSE, out.width = '60%'}
+```
+
+```{r table_5, echo=FALSE, out.width = '60%'}
+```
+
+# Limitations & Future
+
+# References
