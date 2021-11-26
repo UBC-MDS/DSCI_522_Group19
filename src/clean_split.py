@@ -23,10 +23,26 @@ opt = docopt(__doc__)  # parse these into dictionary opt
 
 
 def main(input_red, input_white, out_dir):
-    # input_red = "data/raw/winequality-red.csv"
-    # input_white = "data/raw/winequality-white.csv"
-    # out_file = "data/processed/train_df.csv"
-    
+    """
+    Reads data from two input files and combines data into one dataframe
+
+    Parameters:
+    ----------
+    input_red : path for the first input file 
+    input_white : path for the second input file 
+    out_dir: directory  where output files are saved
+
+    Returns:
+    --------
+    train_df, test_df : creates csv files for train_df, test_df
+    X_train, X_test, y_train, y_test : creates csv files for X_train, X_test, y_train, y_test
+
+    example:
+    --------
+        input_red = "data/raw/winequality-red.csv"
+        input_white = "data/raw/winequality-white.csv"
+        out_file = "data/processed/train_df.csv"
+    """
     wine_df_original = combine_dataframes(input_red, input_white)
     train_df, test_df = train_test_split(wine_df_original, test_size=0.2, random_state=123)
     X_train, X_test, y_train, y_test = split_for_train_test(wine_df_original, target_column='quality', test_size=0.2, random_state=123)
@@ -37,6 +53,18 @@ def main(input_red, input_white, out_dir):
     
     
 def combine_dataframes(input_red, input_white):
+    """
+    Reads data from two input files and combines data into one dataframe
+
+    Parameters:
+    ----------
+    input_red : path for the first input file 
+    input_white : path for the second input file 
+
+    Returns:
+    --------
+    wine_df : concatanates data from two dataframes
+    """
     red_df = pd.read_csv(input_red, sep=";")
     white_df = pd.read_csv(input_white, sep=";")
     
@@ -48,6 +76,19 @@ def combine_dataframes(input_red, input_white):
     return wine_df
 
 def split_for_train_test(original_df, target_column, test_size=0.2, random_state=123):
+    """
+    Creates train and test splits 
+
+    Parameters:
+    ----------
+    original_df : dataframe read from two input files 
+    target_column : target column name in dataset 
+    test_size: 0.2
+
+    Returns:
+    --------
+    X_train, X_test, y_train, y_test : train and test splits
+    """
 
     train_df, test_df = train_test_split(original_df, test_size=test_size, random_state=random_state)
     X_train = train_df.drop(columns=[target_column])
