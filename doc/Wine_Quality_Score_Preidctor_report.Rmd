@@ -3,11 +3,11 @@ title: "Predicting wine quality score from various characteristics"
 author: "Group 19 - Kingslin Lv, Manju Neervaram Abhinandana Kumar, Zack Tang, Paval Levchenko"
 bibliography: references_wine_score_predictor.bib
 output: 
-  md_document: 
+  html_document: 
     toc: true
   github_document:
     toc: true
-  html_document: 
+  md_document: 
     toc: true
 ---
 
@@ -59,7 +59,7 @@ By exploring the features correlation matrix Figure 3, we identified that some f
 knitr::include_graphics("../results/cor_plot.png")
 ```
 
-The data was processed through the pandas package; EDA was plotted using python the library Altair and the preliminary insights on EDA was using the pandas-profiling package [@reback2020pandas] [@pandasprofiling2019] [@vanderplas2018altair]. This report was compiled using an R document file with scripts running via the docopt package [@R], [@docopt]. Tables were stored via csv files and displayed using knitr's kable function [@knitr], [@rmarkdown]. After tuning the model, we will use test data set to do the final check of the accuracy. If the result is not satisfactory, we will make further adjustments based on the new issue found.
+The data was processed through the pandas package; EDA was plotted using python the library Altair and the preliminary insights on EDA was using the pandas-profiling package [@reback2020pandas] [@pandasprofiling2019]. This report was compiled using an R document file with scripts running via the docopt package [@R], [@docopt]. Tables were stored via csv files and displayed using knitr's kable function [@knitr], [@rmarkdown]. After tuning the model, we will use test data set to do the final check of the accuracy. If the result is not satisfactory, we will make further adjustments based on the new issue found.
 
 # Results & Discussion
 
@@ -72,7 +72,8 @@ kable(cv_scores_df,
       caption="Table 1. Table of cross-validation results for each tested model")
 ```
 
-Finally, we conducted hyperparameter optimization as `RandomForestRegressor` encountered severe overfitting issue. The best hyperparameters we obtained from the algorithm are `max_depth` at 344, `max_leaf_nodes` at 851, and `n_estimators`at 258. The best cross-validation score is 0.48 using the best hyperparameter. The score for test data set is 0.52 upon tunning hyper-parameters; however, as we discovered above, the train score is 0.91 as displayed in the table 2, which indicates that we still have overfitting issue for the `RandomForestRegressor` model.
+Finally, we conducted hyperparameter optimization as `RandomForestRegressor` encountered severe overfitting issue. The best hyperparameters we obtained from the algorithm are `max_depth` at `r final_results_df[[1,2]]`, `max_leaf_nodes` at `r final_results_df[[2,2]]`, and `n_estimators`at 
+`r final_results_df[[3,2]]` The best cross-validation score is `r final_results_df[[4,2]]` using the best hyperparameter. The score for test data set is `r final_results_df[[6,2]]` upon tunning hyper-parameters; however, as we discovered above, the train score is `r final_results_df[[5,2]]` as displayed in the table 2, which indicates that we still have overfitting issue for the `RandomForestRegressor` model.
 
 ```{r table_2, echo=FALSE, out.width = '60%'}
 kable(final_results_df,
