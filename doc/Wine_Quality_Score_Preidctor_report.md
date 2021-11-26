@@ -150,7 +150,6 @@ process simplifes our model and it’s cost-efficient for future data
 collection.
 
 <table>
-<caption>Table 1. Table of cross-validation results for each tested model</caption>
 <colgroup>
 <col style="width: 26%" />
 <col style="width: 14%" />
