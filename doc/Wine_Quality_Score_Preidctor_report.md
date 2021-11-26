@@ -116,14 +116,13 @@ datasets.
 
 The data was processed through the pandas package; EDA was plotted using
 python the library Altair and the preliminary insights on EDA was using
-the pandas-profiling package (team 2020) (Brugman 2019)
-(**vanderplas2018altair?**). This report was compiled using an R
-document file with scripts running via the docopt package (R Core Team
-2019), (de Jonge 2020). Tables were stored via csv files and displayed
-using knitr’s kable function (Xie 2020), (Allaire et al. 2020). After
-tuning the model, we will use test data set to do the final check of the
-accuracy. If the result is not satisfactory, we will make further
-adjustments based on the new issue found.
+the pandas-profiling package (team 2020) (Brugman 2019). This report was
+compiled using an R document file with scripts running via the docopt
+package (R Core Team 2019), (de Jonge 2020). Tables were stored via csv
+files and displayed using knitr’s kable function (Xie 2020), (Allaire et
+al. 2020). After tuning the model, we will use test data set to do the
+final check of the accuracy. If the result is not satisfactory, we will
+make further adjustments based on the new issue found.
 
 # Results & Discussion
 
@@ -256,16 +255,13 @@ Table 1. Table of cross-validation results for each tested model
 
 Finally, we conducted hyperparameter optimization as
 `RandomForestRegressor` encountered severe overfitting issue. The best
-hyperparameters we obtained from the algorithm are `max_depth` at
-`final_results_df[[1,2]]`, `max_leaf_nodes` at
-`final_results_df[[2,2]]`, and `n_estimators`at
-`final_results_df[[3,3]]` The best cross-validation score is
-`final_results_df[[4,4]]` using the best hyperparameter. The score for
-test data set is `final_results_df[[6,6]]` upon tunning
-hyper-parameters; however, as we discovered above, the train score is
-`final_results_df[[5,5]]` as displayed in the table 2, which indicates
-that we still have overfitting issue for the `RandomForestRegressor`
-model.
+hyperparameters we obtained from the algorithm are `max_depth` at 344,
+`max_leaf_nodes` at 851, and `n_estimators`at 258 The best
+cross-validation score is 0.483 using the best hyperparameter. The score
+for test data set is 0.532 upon tunning hyper-parameters; however, as we
+discovered above, the train score is 0.913 as displayed in the table 2,
+which indicates that we still have overfitting issue for the
+`RandomForestRegressor` model.
 
 <table>
 <caption>Table 2. Tuned (+ reduced features) RandomForestRegressor model test results.</caption>
