@@ -2,19 +2,19 @@
 
 In this project we aim to predict the wine quality scores ranging from 0
 to 10 based on physicochemical properties of wines sensory tests. To
-answer this predictive question, we decide to build a regression model.
-Through our exploratory data analysis we analyze the distribution of
+answer this predictive question, we decided to build a regression model.
+Through our exploratory data analysis we analyzed the distribution of
 each feature and correlation between features and the target. Then
 through the cross-validation process based on feature input, we
 concluded that the Random Forest model delivers a much higher training
-score, but there was a clear problem of overfitting. We further conduct
-feature selection and hyperparameter optimization in an attempt to
-reduce the score gap between train and test data. We are able to drop
-number of features but maintain the relatively similar score through
-this process. Unfortunately, the test score with the best
-hyperparameters was only around 0.52, which is fairly acceptable. Next
+score, but there was a clear problem of overfitting. We further
+conducted feature selection and hyperparameter optimization in an
+attempt to reduce the score gap between train and test data. We were
+able to drop number of features but maintain the relatively similar
+score through this process. Unfortunately, the test score with the best
+hyperparameters was only around 0.52, which is fairly acceptable. Next,
 we potentially can improve our model prediction score by using a larger
-dataset with more features and find a more high score model with its
+dataset with more features and build a more high score model with its
 best hyperparameters.
 
 # Introduction
@@ -26,10 +26,10 @@ requires the assessment given by human experts, which makes this process
 very expensive. The wine market would be of interest if the human
 quality of tasting can be related to wine’s chemical properties so that
 quality assessment processes are more controlled. This project aims to
-build up a machine learning model for purpose of predicting the wine
-quality score based on specific chemical properties of each beverage.
-This task will likely require a lot of domain knowledge and according to
-a paper published by Dr. P. Cortez, Dr. A. Cerdeira, Dr. F. Almeida,
+build a machine learning model for purpose of predicting the wine
+quality score based on each of its specific chemical properties. This
+task will likely require a lot of domain knowledge and according to a
+paper published by Dr. P. Cortez, Dr. A. Cerdeira, Dr. F. Almeida,
 Dr. T. Matos and Dr. J. Reis they were able to demonstrate the results
 of a data mining approach had promising results compared to alternative
 neural network methods (Cortez et al. 2009).
@@ -40,7 +40,7 @@ improve wine making and classify wines to premium brands which can be
 useful for setting prices and for marketing purposes based on consumer
 tastes. It should be noted that using taste as a sensory measurement for
 wine quality could be quite unreliable. We are also interested in
-exploring how much output data could depend on other sensory information
+exploring to what extent the score depends on other sensory information
 such as color of wine. Potentially, human brain could be processing
 taste and visual information differently rather than taste only. Thus,
 we are not expecting to obtain a really high test score.
@@ -49,7 +49,7 @@ we are not expecting to obtain a really high test score.
 
 ## Data
 
-The dataset used in this project was retrieved from the University of
+The dataset used in this project is retrieved from the University of
 California Irvine (UCI) machine learning repository (Dua and Graff 2017)
 and was collected by Paulo Cortez, University of Minho, Guimarães,
 Portugal and A. Cerdeira, F. Almeida, T. Matos with help from J. Reis,
@@ -75,8 +75,8 @@ single wine which was tested and scored based on human sensory data.
 
 As the first step towards building the model to answer the predictive
 question posed above we split the data into train and test data set at
-80% and 20% level. We perform our exploratory data analysis on the
-training data frame. Firstly we plotted the distribution of the quality
+80% and 20% level. We performed our exploratory data analysis on the
+training data frame. Firstly, we plotted the distribution of the quality
 scores for each wine (Figure 1). Despite the quality scoring being
 performed a scale from 1-10 only values in the range of 3-9 were
 observed. It can be seen that our data is significantly imbalanced, with
@@ -89,7 +89,7 @@ Figure 1. Distribution of quality scores
 </p>
 
 After taking a look at the distributions of our 11 numerical features,
-and we realize all attributes have outliers with extreme value. We will
+and we realized all attributes have outliers with extreme value. We will
 have to scale numerical features in order to reduce skewness at the
 process of building the model. Also, there is a class imbalance issues
 as revealed from the distribution plot.
@@ -99,14 +99,14 @@ as revealed from the distribution plot.
 Figure 2. Data distribution of numeric features in training datasets.
 </p>
 
-By exploring the features correlation matrix, we identified that some
-features are highly correlated, and we choose to drop some redundant
-features in the process of feature selection. By the below correlation
-matrix, volatile.acidity, sulphates and alcohol are the attributes most
-coorelated with quality of wine. Thus, these 3 attributes are most
-attractive to us. We might drop some features that have smaller
-correlations such as fixed acidity and type. We will further identify
-this through our model establishment process.
+By exploring the features correlation matrix Figure 3, we identified
+that some features are highly correlated, and we choose to drop some
+redundant features in the process of feature selection. By the below
+correlation matrix, volatile.acidity, sulphates and alcohol are the
+attributes most correlated with quality of wine. Thus, these 3
+attributes are most relevant. We might drop some features that have
+smaller correlations such as fixed acidity and type. We will further
+identify this through our model establishment process.
 
 <img src="../results/cor_plot.png" alt="Figure 3. Quality distribution of wines in the training and test datasets." width="60%" />
 <p class="caption">
@@ -119,12 +119,11 @@ python the library Altair and the preliminary insights on EDA was using
 the pandas-profiling package (team 2020) (Brugman 2019)
 (**vanderplas2018altair?**). This report was compiled using an R
 document file with scripts running via the docopt package (R Core Team
-2019), (de Jonge 2020). Tables were stored via feather files (with
-dependency on arrow) and displayed using knitr’s kable function (Xie
-2020), (Allaire et al. 2020). After tuning the model, we will use test
-data set to do the final check of the accuracy. If the result is not
-satisfactory, we will make further adjustments based on the new issue
-found.
+2019), (de Jonge 2020). Tables were stored via csv files and displayed
+using knitr’s kable function (Xie 2020), (Allaire et al. 2020). After
+tuning the model, we will use test data set to do the final check of the
+accuracy. If the result is not satisfactory, we will make further
+adjustments based on the new issue found.
 
 # Results & Discussion
 
@@ -257,13 +256,16 @@ Table 1. Table of cross-validation results for each tested model
 
 Finally, we conducted hyperparameter optimization as
 `RandomForestRegressor` encountered severe overfitting issue. The best
-hyperparameters we obtained from the algorithm are `max_depth` at 344,
-`max_leaf_nodes` at 851, and `n_estimators`at 258. The best
-cross-validation score is 0.48 using the best hyperparameter. The score
-for test data set is 0.52 upon tunning hyper-parameters; however, as we
-discovered above, the train score is 0.91 as displayed in the table 2,
-which indicates that we still have overfitting issue for the
-`RandomForestRegressor` model.
+hyperparameters we obtained from the algorithm are `max_depth` at
+`final_results_df[[1,2]]`, `max_leaf_nodes` at
+`final_results_df[[2,2]]`, and `n_estimators`at
+`final_results_df[[3,3]]` The best cross-validation score is
+`final_results_df[[4,4]]` using the best hyperparameter. The score for
+test data set is `final_results_df[[6,6]]` upon tunning
+hyper-parameters; however, as we discovered above, the train score is
+`final_results_df[[5,5]]` as displayed in the table 2, which indicates
+that we still have overfitting issue for the `RandomForestRegressor`
+model.
 
 <table>
 <caption>Table 2. Tuned (+ reduced features) RandomForestRegressor model test results.</caption>
