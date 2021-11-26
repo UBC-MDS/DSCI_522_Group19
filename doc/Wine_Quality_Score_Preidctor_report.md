@@ -160,7 +160,7 @@ collection.
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">…1</th>
+<th style="text-align: left;"></th>
 <th style="text-align: left;">Ridge</th>
 <th style="text-align: left;">SVC</th>
 <th style="text-align: left;">OneVsRest</th>
