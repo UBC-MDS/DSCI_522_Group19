@@ -12,7 +12,7 @@ We built a regression model using Ridge, One-Vs-Rest Logistic Regression, SVC, a
 
 ## Report
 
-The final report can be here found [here](https://github.com/UBC-MDS/DSCI_522_Group19_Wine_Quality_Score_Predictor/blob/main/doc/Wine_Quality_Score_Preidctor_report.Rmd)
+The final report can be here found [here](https://github.com/UBC-MDS/DSCI_522_Group19_Wine_Quality_Score_Predictor/blob/main/doc/Wine_Quality_Score_Preidctor_report.md)
 
   
 ## Usage
@@ -20,7 +20,7 @@ The final report can be here found [here](https://github.com/UBC-MDS/DSCI_522_Gr
 To replicate the analysis, clone this GitHub repository, install the
 [dependencies](#dependencies) listed below, and run the following
 commands at the command line/terminal from the root directory of this
-project: 
+project:
 
 ```
 # download wine data set to directory
