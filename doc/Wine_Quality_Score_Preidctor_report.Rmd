@@ -65,13 +65,17 @@ knitr::include_graphics("../results/cor_plot.png")
 
 ```{r table_1, echo=FALSE, out.width = '60%'}
 ```
+After we decided to approach our problem as regression issue, we chose to use four typical regression supervised learning models, named as Ridge, SVC, OneVsRestClassifier and RandomForestRegressor. And for comprehensive comparison purpose, we included negative mean squared error, negative root mean squared error, negative mean absolute error, r squared and MAPE scorer to see the performance of our model. The cross-validation scores and train scores for each model is shown in the Table x (Out(234) in model fitting raw code).
 
+By assessing the numbers in the table, we discovered that Random Forest returned the highest cross-validation scores, so we decided to proceed with Random Forest model for further feature selections and hyper-parameter optimization. 
 ```{r table_2, echo=FALSE, out.width = '60%'}
 
 ```
+We applied Recursive Features Elimination (RFE) for preliminary feature selections, and limit the number of features as 10 in order to make the model more efficient. By using the algorithm, we chose to drop "type" and "fixed acidity" features. Because by dropping those two features, even though we did not get better scores, we are able to achieve the same scores with lesser features. It is great because it will simplify our model and save cost for future data collection. The result of the updated scores is shown in the Table y (Out(259) in model fitting raw code).
 
 ```{r table_3, echo=FALSE, out.width = '60%'}
 ```
+Finally, we conduct hyper-parameter optimization because we recognized that Random Forest method encountered severe overfitting issue. We employed random search to look for some key hyper-parameters, such as max_depth, max_leaf_nodes, and n_estimators. The best hyper-parameter value we got from the algorithm are ['max_depth': 344, 'max_leaf_nodes': 851, 'n_estimators': 258]. And the best validation score we got is 0.48. And the test score is 0.52 after tunning the hyper-parameters. However, as we discovered above, the train score is 0.91, which means we still have overfitting issue by using Random Forest model. We may investigate further and figure out the next steps later. The final best scores are shown in the Table z (Out(277) in model fitting raw code).
 
 ```{r fig_4, echo=FALSE, fig.cap="Figure 2. Bar chart showing the target weights of different features of our RandomForestRegressor model.", out.width = '40%'}
 ```
