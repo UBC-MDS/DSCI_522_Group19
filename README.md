@@ -6,15 +6,13 @@ Wine Quality Score Predictor is our data analysis project for the 2021-22 UBC MD
 
 ## Introduction
 
-In this project, the aim of this project is to predict the quality of wine on a scale of 0 to 10 given a set of physiochemical features rated by wine test reviewers as inputs. This model is useful to support wine tasting evaluations. Quality evaluation is part of wine certification process and can be used to improve wine making and classify wines to premium brands which can be useful for setting prices and for marketing purposes based on consumer tastes.
+The aim of this project is to predict the quality of wine on a scale of 0 to 10 given a set of physiochemical features rated by wine test reviewers as inputs. This model is useful to support wine tasting evaluations. The data set for this project is related to red and white vinho verde wine samples, from Portugal, created by P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis. It is sourced from the UCI Machine Learning Repository and can be found [here](https://archive.ics.uci.edu/ml/datasets/wine+quality). Each row in the data set represents label of wine (red or white) and its physicochemical properties which includes fixed acidity, volatile acidity, citric acid, residual sugar, chlorides, free sulfur dioxide, total sulfur dioxide, density, pH, and sulphates.
 
-The data set for this project is related to red and white vinho verde wine samples, from Portugal, created by P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis. It is sourced from the UCI Machine Learning Repository and can be found [here](https://archive.ics.uci.edu/ml/datasets/wine+quality). Each row in the data set represents label of wine (red or white) and its physicochemical properties which includes fixed acidity, volatile acidity, citric acid, residual sugar, chlorides, free sulfur dioxide, total sulfur dioxide, density, pH, and sulphates.
-
-We built a regression model using Ridge, Logistic Regression, SVC, and Random Forest. Running through the cross-validation, we found the Random Forest delivers a much higher training score,but there was a clear case of overfitting issue. We then ran hyperparameter optimization in an attempt to improve the model. Unfortunately, the test score with the best hyperparameters was only around xxxxx. By analyzing feature coefficients and we can obtain XXXX feature had the highest coefficient score, which was expected from our initial [EDA] (https://github.com/UBC-MDS/DSCI_522_Group19_Wine_Quality_Score_Predictor/blob/main/src/Wine_Score_EDA.ipynb) In the coming weeks, we intend to refine our model further and come out a higher test score if possible. **some contents here are placeholder**
+We built a regression model using Ridge, One-Vs-Rest Logistic Regression, SVC, and Random Forest Regressor. Running through the cross-validation, we found the Random Forest Regressor delivers a much higher training score, but there was a clear case of overfitting issue. We then ran hyperparameter optimization in an attempt to improve the model. Unfortunately, the test score with the best hyperparameters was only around 0.52. By analyzing feature coefficients and we reduced to have 10 features. Some features have low coeffiicentgs as what was expected from our initial [EDA](https://github.com/UBC-MDS/DSCI_522_Group19_Wine_Quality_Score_Predictor/blob/main/src/Wine_Score_EDA.ipynb). In the coming weeks, we intend to refine our model further and come out a higher test score if possible.
 
 ## Report
 
-The final report can be here found [here] (https://github.com/UBC-MDS/DSCI_522_Group19_Wine_Quality_Score_Predictor/blob/main/doc/Wine_Quality_Score_Preidctor_report.Rmd)
+The final report can be here found [here](https://github.com/UBC-MDS/DSCI_522_Group19_Wine_Quality_Score_Predictor/blob/main/doc/Wine_Quality_Score_Preidctor_report.md)
 
   
 ## Usage
@@ -22,7 +20,7 @@ The final report can be here found [here] (https://github.com/UBC-MDS/DSCI_522_G
 To replicate the analysis, clone this GitHub repository, install the
 [dependencies](#dependencies) listed below, and run the following
 commands at the command line/terminal from the root directory of this
-project: 
+project:
 
 ```
 # download wine data set to directory
@@ -69,6 +67,7 @@ conda activate wine
 
 * R version 4.0.2. and R packages:
  - knitr==1.30
+ - feather==0.3.5
  - kableExtra==1.3.1
  - tidyverse==1.3.0
  - docopt==0.6.2
