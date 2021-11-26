@@ -9,8 +9,8 @@ Options:
 """
 
 # Example:
-# python download_data.py --url="https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv" --out_file="../data/raw/winequality-red.csv"
-# python download_data.py --url="https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv" --out_file="../data/raw/winequality-white.csv"
+# python download_data.py --url="https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv" --out_file="data/raw/winequality-red.csv"
+# python download_data.py --url="https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv" --out_file="data/raw/winequality-white.csv"
 
 import os
 import pandas as pd
@@ -34,8 +34,8 @@ def main(url, out_file):
     """
     # red wine url: url_file= "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv"
     # white wine url: url_file = "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv"
-    # red wine output file: out_red = "../data/raw/winequality-red.csv"
-    # white wine output file: out_white = "../data/raw/winequality-white.csv"
+    # red wine output file: out_red = "data/raw/winequality-red.csv"
+    # white wine output file: out_white = "data/raw/winequality-white.csv"
     try: 
         request = requests.get(url)
         request.status_code == 200
