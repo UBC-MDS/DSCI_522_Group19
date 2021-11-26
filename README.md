@@ -1,6 +1,6 @@
 # Wine Quality Score Predictor
 
-Contributors: Kingslin Lv, Manju Neervaram Abhinandana Kumar, Zack Tang, Paval Levchenko
+Contributors: Kingslin Lv, Manju Neervaram Abhinandana Kumar, Zack Tang, Pavel Levchenko
 
 Wine Quality Score Predictor is our data analysis project for the 2021-22 UBC MDS DSCI 522 course.
 
@@ -31,7 +31,7 @@ python src/download_data.py --url="https://archive.ics.uci.edu/ml/machine-learni
 
 
 # pre-process data and split data to training set and test set
-python src/preprocessing.py --input_red="../data/raw/winequality-red.csv" --input_white="../data/raw/winequality-white.csv" --out_file="../data/processed/preprocessed_Xtrain.csv"
+python src/clean_split.py --input_red="data/raw/winequality-red.csv" --input_white="data/raw/winequality-white.csv" --out_dir="data/processed/"
 
 
 # create exploratory data analysis figure and write to file
