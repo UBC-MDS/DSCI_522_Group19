@@ -3,11 +3,11 @@ title: "Predicting wine quality score from various characteristics"
 author: "Group 19 - Kingslin Lv, Manju Neervaram Abhinandana Kumar, Zack Tang, Paval Levchenko"
 bibliography: references_wine_score_predictor.bib
 output: 
-  html_document: 
+  md_document: 
     toc: true
   github_document:
     toc: true
-  md_document: 
+  html_document: 
     toc: true
 ---
 
