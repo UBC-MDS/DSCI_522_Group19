@@ -24,7 +24,7 @@ project:
 
 ```
 # download wine data set to directory
-python src/download_data.py --url="https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv" --out_file="../data/raw/winequality-red.csv"
+python src/download_data.py --url="https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv" --out_file="data/raw/winequality-red.csv"
 python src/download_data.py --url="https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv" --out_file="data/raw/winequality-white.csv"
 
 
@@ -36,12 +36,8 @@ python src/clean_split.py --input_red="data/raw/winequality-red.csv" --input_whi
 python Wine_Score_EDA.py --input_file="..data/processed/train_df.csv"
 
 
-# fitting model
-python src/fit_wine_quality_predict_model.py --in_file_1="data/processed/processed_train.csv" --out_dir="results/"
-
-# test model
-python src/wine_quality_test_results.py --in_file_1="data/processed/processed_train.csv" --in_file_2="data/processed/processed_test.csv" --out_dir="results/"
-
+# fitting model and generating final results on the test data
+python src/model_fitting.py --X_train_path="data/processed/X_train.csv" --X_test_path="data/processed/X_test.csv" --y_train_path="data/processed/y_train.csv" --y_test_path="data/processed/y_test.csv"
 
 # render final report (RStudio terminal)
 Rscript -e "rmarkdown::render('reports/reports.Rmd', output_format = 'github_document')"
