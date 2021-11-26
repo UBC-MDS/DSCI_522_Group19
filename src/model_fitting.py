@@ -222,7 +222,7 @@ def evalute_alternative_methods(X_train, y_train, preprocessor):
 
 
     results_df = pd.DataFrame(results_comb)
-    results_df.to_csv('results/cv_scores_for_alternative_methods.csv', index = False)
+    results_df.to_csv('results/cv_scores_for_alternative_methods.csv')
     
 def tune_hyperparameters_for_best_model(X_train, X_test, y_train, y_test, preprocessor):
     """

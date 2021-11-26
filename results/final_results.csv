@@ -1,0 +1,7 @@
+best_model,RandomForestRegressor
+max_depth,344
+max_leaf_nodes,851
+n_estimators,258
+cv_best_score,0.483
+train_score,0.913
+test_score,0.532
