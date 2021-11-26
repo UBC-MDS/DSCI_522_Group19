@@ -14,7 +14,7 @@ We built a regression model using Ridge, Logistic Regression, SVC, and Random Fo
 
 ## Report
 
-The final report can be here found [here] (https://github.com/UBC-MDS/DSCI_522_Group19_Wine_Quality_Score_Predictor/tree/main/doc)
+The final report can be here found [here] (https://github.com/UBC-MDS/DSCI_522_Group19_Wine_Quality_Score_Predictor/blob/main/doc/Wine_Quality_Score_Preidctor_report.Rmd)
 
   
 ## Usage
@@ -26,21 +26,23 @@ project:
 
 ```
 # download wine data set to directory
-python src/download_data.py --url="https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv" --out_file="data/winequality-red.csv"
-python src/download_data.py --url="https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv" --out_file="data/winequality-white.csv"
+python src/download_data.py --url="https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv" --out_file="../data/raw/winequality-red.csv"
+python src/download_data.py --url="https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv" --out_file="data/raw/winequality-white.csv"
 
 
 # pre-process data and split data to training set and test set
+python src/preprocessing.py --input_red="../data/raw/winequality-red.csv" --input_white="../data/raw/winequality-white.csv" --out_file="../data/processed/preprocessed_Xtrain.csv"
 
 
 # create exploratory data analysis figure and write to file
+python Wine_Score_EDA.py --input_file="..data/processed/train_df.csv"
 
 
 # fitting model
-
+python src/fit_wine_quality_predict_model.py --in_file_1="data/processed/processed_train.csv" --out_dir="results/"
 
 # test model
-
+python src/wine_quality_test_results.py --in_file_1="data/processed/processed_train.csv" --in_file_2="data/processed/processed_test.csv" --out_dir="results/"
 
 
 # render final report (RStudio terminal)
@@ -69,6 +71,7 @@ conda activate wine
  - knitr==1.30
  - kableExtra==1.3.1
  - tidyverse==1.3.0
+ - docopt==0.6.2
   
 ## License
 
