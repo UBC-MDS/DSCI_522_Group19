@@ -13,12 +13,11 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(feather)
-library(arrow)
 library(knitr)
+library(tidyverse)
 
-# path <- "../results/tuned_crossval_results.feather"
-# df <- read_feather(path)
+cv_scores_df <- read_csv("../results/cv_scores_for_alternative_methods.csv")
+final_results_df <- read_csv("../results/final_results.csv")
 ```
 
 # Summary
@@ -63,28 +62,20 @@ The data was processed through the pandas package; EDA was plotted using python 
 
 # Results & Discussion
 
-After we decided to approach our problem as regression issue, we chose to use four typical regression supervised learning models `Ridge`, `OneVsRestClassifier`, `SVC`, and `RandomForestRegressor`[\@Python], [\@scikit-learn]. To better understand the performance of our selected models, we decided to evaluate negative mean squared error, negative root mean squared error, negative mean absolute error, r squared and MAPE scores given this is a regression issue with multiple feature coefficients. The cross-validation scores for each model is summarized in the Table 1. We discovered that `RandomForestRegressor` returned the highest cross-validation score, and so next we decided to further tune the `RandomForestRegressor` model via feature selection and hyper-parameter optimization.
-
-```{r table_1, echo=FALSE, out.width = '60%'}
-# path <- "../results/initial_crossval_results.feather"
-# kable(read_feather(path),
-#       caption="Table 1. Table of cross-validation results for each tested model")
-```
+After we decided to approach our problem as regression issue, we chose to use four typical regression supervised learning models `Ridge`, `OneVsRestClassifier`, `SVC`, and `RandomForestRegressor`[\@Python], [\@scikit-learn]. To better understand the performance of our selected models, we decided to evaluate negative mean squared error, negative root mean squared error, negative mean absolute error, r squared and MAPE scores given this is a regression issue with multiple feature coefficients. The cross-validation scores for each model is summarized in the Table 1. We discovered that `RandomForestRegressor` returned the highest cross-validation score, and so next we decided to further tune the `RandomForestRegressor` model via feature selection and hyper-parameter optimization. 
 
 We applied Recursive Features Elimination (RFE) for preliminary feature selections, and limit the number of features as 10 in order to make the model more efficient. Through this algorithm we determined to drop `type` and `fixed acidity` features, and we are able to achieve very similar scores with lesser features as displayed in the Table 2. This process simplifes our model and it's cost-efficient for future data collection.
 
-```{r table_2, echo=FALSE, out.width = '60%'}
-# path <- "../results/reduced_tuned_crossval_results.feather"
-# kable(read_feather(path),
-#       caption="Table 2. Tuned (+ reduced features) RandomForestRegressor Cross-validation training results.")
+```{r table_1, echo=FALSE, out.width = '60%'}
+kable(cv_scores_df,
+      caption="Table 1. Table of cross-validation results for each tested model")
 ```
 
-Finally, we conducted hyperparameter optimization as `RandomForestRegressor` encountered severe overfitting issue. The best hyperparameters we obtained from the algorithm are `max_depth` at 344, `max_leaf_nodes` at 851, and `n_estimators`at 258. The best cross-validation score is 0.48 using the best hyperparameter. The score for test data set is 0.52 upon tunning hyper-parameters; however, as we discovered above, the train score is 0.91 as displayed in the table 3, which indicates that we still have overfitting issue for the `RandomForestRegressor` model.
+Finally, we conducted hyperparameter optimization as `RandomForestRegressor` encountered severe overfitting issue. The best hyperparameters we obtained from the algorithm are `max_depth` at 344, `max_leaf_nodes` at 851, and `n_estimators`at 258. The best cross-validation score is 0.48 using the best hyperparameter. The score for test data set is 0.52 upon tunning hyper-parameters; however, as we discovered above, the train score is 0.91 as displayed in the table 2, which indicates that we still have overfitting issue for the `RandomForestRegressor` model.
 
-```{r table_3, echo=FALSE, out.width = '60%'}
-# path <- "../results/reduced_tuned_test_results.feather"
-# kable(read_feather(path),
-#       caption="Table 3. Tuned (+ reduced features) RandomForestRegressor model test results.")
+```{r table_2, echo=FALSE, out.width = '60%'}
+kable(final_results_df,
+       caption="Table 2. Tuned (+ reduced features) RandomForestRegressor model test results.")
 ```
 
 # Limitations & Future

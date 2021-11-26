@@ -149,15 +149,160 @@ similar scores with lesser features as displayed in the Table 2. This
 process simplifes our model and it’s cost-efficient for future data
 collection.
 
+<table>
+<caption>Table 1. Table of cross-validation results for each tested model</caption>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">…1</th>
+<th style="text-align: left;">Ridge</th>
+<th style="text-align: left;">SVC</th>
+<th style="text-align: left;">OneVsRest</th>
+<th style="text-align: left;">Random Forest</th>
+<th style="text-align: left;">Random Forest_rfe</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">fit_time</td>
+<td style="text-align: left;">0.026 (+/- 0.009)</td>
+<td style="text-align: left;">2.470 (+/- 0.068)</td>
+<td style="text-align: left;">0.267 (+/- 0.026)</td>
+<td style="text-align: left;">4.304 (+/- 0.028)</td>
+<td style="text-align: left;">16.577 (+/- 0.170)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">score_time</td>
+<td style="text-align: left;">0.012 (+/- 0.002)</td>
+<td style="text-align: left;">0.985 (+/- 0.030)</td>
+<td style="text-align: left;">0.012 (+/- 0.002)</td>
+<td style="text-align: left;">0.064 (+/- 0.002)</td>
+<td style="text-align: left;">0.062 (+/- 0.003)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">test_neg_mean_squared_error</td>
+<td style="text-align: left;">-0.542 (+/- 0.034)</td>
+<td style="text-align: left;">-0.587 (+/- 0.016)</td>
+<td style="text-align: left;">-0.648 (+/- 0.006)</td>
+<td style="text-align: left;">-0.395 (+/- 0.027)</td>
+<td style="text-align: left;">-0.395 (+/- 0.031)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">train_neg_mean_squared_error</td>
+<td style="text-align: left;">-0.536 (+/- 0.009)</td>
+<td style="text-align: left;">-0.542 (+/- 0.007)</td>
+<td style="text-align: left;">-0.642 (+/- 0.005)</td>
+<td style="text-align: left;">-0.056 (+/- 0.002)</td>
+<td style="text-align: left;">-0.056 (+/- 0.002)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">test_neg_root_mean_squared_error</td>
+<td style="text-align: left;">-0.736 (+/- 0.023)</td>
+<td style="text-align: left;">-0.766 (+/- 0.010)</td>
+<td style="text-align: left;">-0.805 (+/- 0.004)</td>
+<td style="text-align: left;">-0.628 (+/- 0.021)</td>
+<td style="text-align: left;">-0.628 (+/- 0.025)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">train_neg_root_mean_squared_error</td>
+<td style="text-align: left;">-0.732 (+/- 0.006)</td>
+<td style="text-align: left;">-0.736 (+/- 0.005)</td>
+<td style="text-align: left;">-0.801 (+/- 0.003)</td>
+<td style="text-align: left;">-0.237 (+/- 0.003)</td>
+<td style="text-align: left;">-0.238 (+/- 0.003)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">test_neg_mean_absolute_error</td>
+<td style="text-align: left;">-0.570 (+/- 0.015)</td>
+<td style="text-align: left;">-0.480 (+/- 0.010)</td>
+<td style="text-align: left;">-0.520 (+/- 0.003)</td>
+<td style="text-align: left;">-0.450 (+/- 0.012)</td>
+<td style="text-align: left;">-0.451 (+/- 0.015)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">train_neg_mean_absolute_error</td>
+<td style="text-align: left;">-0.567 (+/- 0.004)</td>
+<td style="text-align: left;">-0.441 (+/- 0.004)</td>
+<td style="text-align: left;">-0.514 (+/- 0.002)</td>
+<td style="text-align: left;">-0.169 (+/- 0.002)</td>
+<td style="text-align: left;">-0.169 (+/- 0.002)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">test_r2</td>
+<td style="text-align: left;">0.289 (+/- 0.029)</td>
+<td style="text-align: left;">0.231 (+/- 0.020)</td>
+<td style="text-align: left;">0.150 (+/- 0.006)</td>
+<td style="text-align: left;">0.482 (+/- 0.027)</td>
+<td style="text-align: left;">0.481 (+/- 0.032)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">train_r2</td>
+<td style="text-align: left;">0.298 (+/- 0.007)</td>
+<td style="text-align: left;">0.290 (+/- 0.011)</td>
+<td style="text-align: left;">0.158 (+/- 0.008)</td>
+<td style="text-align: left;">0.926 (+/- 0.002)</td>
+<td style="text-align: left;">0.926 (+/- 0.002)</td>
+</tr>
+</tbody>
+</table>
+
+Table 1. Table of cross-validation results for each tested model
+
 Finally, we conducted hyperparameter optimization as
 `RandomForestRegressor` encountered severe overfitting issue. The best
 hyperparameters we obtained from the algorithm are `max_depth` at 344,
 `max_leaf_nodes` at 851, and `n_estimators`at 258. The best
 cross-validation score is 0.48 using the best hyperparameter. The score
 for test data set is 0.52 upon tunning hyper-parameters; however, as we
-discovered above, the train score is 0.91 as displayed in the table 3,
+discovered above, the train score is 0.91 as displayed in the table 2,
 which indicates that we still have overfitting issue for the
 `RandomForestRegressor` model.
+
+<table>
+<caption>Table 2. Tuned (+ reduced features) RandomForestRegressor model test results.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">best_model</th>
+<th style="text-align: right;">RandomForestRegressor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">max_depth</td>
+<td style="text-align: right;">344.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">max_leaf_nodes</td>
+<td style="text-align: right;">851.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">n_estimators</td>
+<td style="text-align: right;">258.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cv_best_score</td>
+<td style="text-align: right;">0.483</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">train_score</td>
+<td style="text-align: right;">0.913</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">test_score</td>
+<td style="text-align: right;">0.532</td>
+</tr>
+</tbody>
+</table>
+
+Table 2. Tuned (+ reduced features) RandomForestRegressor model test
+results.
 
 # Limitations & Future
 
