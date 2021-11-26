@@ -1,4 +1,4 @@
-## Summary
+# Summary
 
 In this project we aim to predict the wine quality scores ranging from 0
 to 10 based on physicochemical properties of wines sensory tests. To
@@ -17,11 +17,11 @@ we potentially can improve our model prediction score by using a larger
 dataset with more features and find a more high score model with its
 best hyperparameters.
 
-## Introduction
+# Introduction
 
 The wine industry shows a recent extensive growth and the industry
 experts are using product quality certifications to promote their
-products(Orth and Krška 2001). This is a time-consuming process and
+products\[@orth2001quality\]. This is a time-consuming process and
 requires the assessment given by human experts, which makes this process
 very expensive. The wine market would be of interest if the human
 quality of tasting can be related to wine’s chemical properties so that
@@ -32,7 +32,7 @@ This task will likely require a lot of domain knowledge and according to
 a paper published by Dr. P. Cortez, Dr. A. Cerdeira, Dr. F. Almeida,
 Dr. T. Matos and Dr. J. Reis they were able to demonstrate the results
 of a data mining approach had promising results compared to alternative
-neural network methods (Cortez et al. 2009).
+neural network methods \[@CORTEZ2009547\].
 
 This model is useful to support wine tasting evaluations. Quality
 evaluation is part of wine certification process and can be used to
@@ -50,22 +50,22 @@ we are not expecting to obtain a really high test score.
 ## Data
 
 The dataset used in this project was retrieved from the University of
-California Irvine (UCI) machine learning repository (Dua and Graff 2017)
-and was collected by Paulo Cortez, University of Minho, Guimarães,
-Portugal and A. Cerdeira, F. Almeida, T. Matos with help from J. Reis,
-Viticulture Commission of the Vinho Verde Region(CVRVV), Porto, Portugal
-in 2009. This dataset contains the results of various physiochemical
-test, including scoring for properties like fixed acidity, volatile
-acidity, citric acid, residual sugar, chlorides, free sulfur dioxide,
-total sulfur dioxide, density, pH, sulphates, and alcohol (11 features),
-which were preformed on white “Vinho Verde” wine samples from Northern
+California Irvine (UCI) machine learning repository \[@Dua2019\] and was
+collected by Paulo Cortez, University of Minho, Guimarães, Portugal and
+A. Cerdeira, F. Almeida, T. Matos with help from J. Reis, Viticulture
+Commission of the Vinho Verde Region(CVRVV), Porto, Portugal in 2009.
+This dataset contains the results of various physiochemical test,
+including scoring for properties like fixed acidity, volatile acidity,
+citric acid, residual sugar, chlorides, free sulfur dioxide, total
+sulfur dioxide, density, pH, sulphates, and alcohol (11 features), which
+were preformed on white “Vinho Verde” wine samples from Northern
 Portugal. The data used in our analysis can be found
 [here](https://archive.ics.uci.edu/ml/datasets/wine+quality).
 Additionally, we add one more feature by concatenating white and red
 wine data, and so there is a binary feature; we think potentially
 human’s perception of wine type may affect the independent scoring on
 the wine quality, thus, we added a binary feature to account for this
-factor (**legin2003evaluation?**).
+factor \[@legin2003evaluation\].
 
 No additional features or specific branding of each wine is available in
 the dataset for privacy purposes. Each row in the dataset represents a
@@ -116,30 +116,30 @@ datasets.
 
 The data was processed through the pandas package; EDA was plotted using
 python the library Altair and the preliminary insights on EDA was using
-the pandas-profiling package (team 2020) (**vanderplas2018altair?**).
-This report was compiled using an R document file with scripts running
-via the docopt package (R Core Team 2019), (de Jonge 2020). Tables were
-stored via feather files (with dependency on arrow) and displayed using
-knitr’s kable function (Wickham 2019), (François et al. 2020), (Xie
-2020), (Allaire et al. 2020). After tuning the model, we will use test
-data set to do the final check of the accuracy. If the result is not
-satisfactory, we will make further adjustments based on the new issue
-found.
+the pandas-profiling package \[@reback2020pandas\]
+\[@pandasprofiling2019\] \[@vanderplas2018altair\]. This report was
+compiled using an R document file with scripts running via the docopt
+package \[@R\], \[@docopt\]. Tables were stored via feather files (with
+dependency on arrow) and displayed using knitr’s kable function
+\[@feather\], \[@arrow\], \[@knitr\], \[@rmarkdown\]. After tuning the
+model, we will use test data set to do the final check of the accuracy.
+If the result is not satisfactory, we will make further adjustments
+based on the new issue found.
 
 # Results & Discussion
 
 After we decided to approach our problem as regression issue, we chose
 to use four typical regression supervised learning models `Ridge`,
-`OneVsRestClassifier`, `SVC`, and `RandomForestRegressor`(Van Rossum and
-Drake 2009), (Pedregosa et al. 2011). To better understand the
-performance of our selected models, we decided to evaluate negative mean
-squared error, negative root mean squared error, negative mean absolute
-error, r squared and MAPE scores given this is a regression issue with
-multiple feature coefficients. The cross-validation scores for each
-model is summarized in the Table 1. We discovered that
-`RandomForestRegressor` returned the highest cross-validation score, and
-so next we decided to further tune the `RandomForestRegressor` model via
-feature selection and hyper-parameter optimization.
+`OneVsRestClassifier`, `SVC`, and `RandomForestRegressor`\[@Python\],
+\[@scikit-learn\]. To better understand the performance of our selected
+models, we decided to evaluate negative mean squared error, negative
+root mean squared error, negative mean absolute error, r squared and
+MAPE scores given this is a regression issue with multiple feature
+coefficients. The cross-validation scores for each model is summarized
+in the Table 1. We discovered that `RandomForestRegressor` returned the
+highest cross-validation score, and so next we decided to further tune
+the `RandomForestRegressor` model via feature selection and
+hyper-parameter optimization.
 
 We applied Recursive Features Elimination (RFE) for preliminary feature
 selections, and limit the number of features as 10 in order to make the
@@ -174,52 +174,3 @@ number of features (i.e. type of grape used in the wine) due for the
 sake of privacy protection.
 
 # References
-
-Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin
-Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, Winston Chang, and
-Richard Iannone. 2020. *Rmarkdown: Dynamic Documents for r*.
-<https://github.com/rstudio/rmarkdown>.
-
-Brugman, Simon. 2019. “<span class="nocase">pandas-profiling:
-Exploratory Data Analysis for Python</span>.”
-<https://github.com/pandas-profiling/pandas-profiling>.
-
-Cortez, Paulo, Antonio Cerdeira, Fernando Almeida, Telmo Matos, and Jose
-Reis. 2009. “Modeling Wine Preferences by Data Mining from
-Physicochemical Properties.” *Decision Support Systems* 47 (4): 547–53.
-https://doi.org/<https://doi.org/10.1016/j.dss.2009.05.016>.
-
-de Jonge, Edwin. 2020. *Docopt: Command-Line Interface Specification
-Language*. <https://CRAN.R-project.org/package=docopt>.
-
-Dua, Dheeru, and Casey Graff. 2017. “UCI Machine Learning Repository.”
-University of California, Irvine, School of Information; Computer
-Sciences. <http://archive.ics.uci.edu/ml>.
-
-François, Romain, Jeroen Ooms, Neal Richardson, and Apache Arrow. 2020.
-*Arrow: Integration to ’Apache’ ’Arrow’*.
-<https://CRAN.R-project.org/package=arrow>.
-
-Orth, Ulrich R, and Pavel Krška. 2001. “Quality Signals in Wine
-Marketing: The Role of Exhibition Awards.” *The International Food and
-Agribusiness Management Review* 4 (4): 385–97.
-
-Pedregosa, F., G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O.
-Grisel, M. Blondel, et al. 2011. “Scikit-Learn: Machine Learning in
-Python.” *Journal of Machine Learning Research* 12: 2825–30.
-
-R Core Team. 2019. *R: A Language and Environment for Statistical
-Computing*. Vienna, Austria: R Foundation for Statistical Computing.
-<https://www.R-project.org/>.
-
-team, The pandas development. 2020. *Pandas-Dev/Pandas: Pandas* (version
-latest). Zenodo. <https://doi.org/10.5281/zenodo.3509134>.
-
-Van Rossum, Guido, and Fred L. Drake. 2009. *Python 3 Reference Manual*.
-Scotts Valley, CA: CreateSpace.
-
-Wickham, Hadley. 2019. *Feather: R Bindings to the Feather ’API’*.
-<https://CRAN.R-project.org/package=feather>.
-
-Xie, Yihui. 2020. *Knitr: A General-Purpose Package for Dynamic Report
-Generation in r*. <https://yihui.org/knitr/>.
