@@ -1,17 +1,19 @@
+#!/usr/bin/env python
+# coding: utf-8
 
 """
 Script for creating plots as part of exploratory data analysis
 
-Usage: Wine_Score_EDA.py --input_file=<train_df>
+Usage: Wine_Score_EDA.py --input_file=<input_file>
 
 Options: 
   
---input_file=<train_df> Path (including filename) to processed data with "train_df"
+--input_file=<input_file> Path (including filename) to processed data with "train_df"
 
 """
 
 # Example:
-# python src/Wine_Score_EDA.py --input_file=<train_df>
+# python src/Wine_Score_EDA.py --input_file=<input_file>
 
 
 
@@ -27,15 +29,28 @@ alt.renderers.enable('mimetype')
 opt = docopt(__doc__) 
 
 def main(input_file):
-  train_df = read_file(input_file)
+  # read train_df.csv file
+  train_df=pd.read_csv(input_file)
   figures(train_df)
 
-def read_file(input_file):
-  train_df=pd.read_csv(input_file)
-  return train_df
 
 
 def figures(train_df):
+  """
+  Creates and saves charts as images in results folder
+
+  Parameters
+  ----------
+  input_file :
+    train_df training data set 
+  
+  Returns
+  ---------
+  png files:
+    quality_fig 
+    repeat_plots
+    cor_plot   
+  """
   #create quality figure distribution
   quality_fig = alt.Chart(train_df).mark_bar().encode(
     x=alt.X('quality', bin=alt.Bin(maxbins=7)),
@@ -45,7 +60,7 @@ def figures(train_df):
   #save quality_dist plot to results folder 
   save(quality_fig, "results/quality_dist.png")
   
-  #create feature distribution
+  #create numeric feature distribution
   repeat_plots = (alt.Chart(train_df).mark_bar().encode(
     alt.X(alt.repeat(), type="quantitative", bin=alt.Bin(maxbins=40)),
     y="count()",
@@ -70,7 +85,7 @@ def figures(train_df):
 
   cor_data["correlation_label"] = cor_data["correlation"].map(
       "{:.2f}".format
-  )  # Round to 2 decimal
+  )  
   
   base = alt.Chart(cor_data).encode(x="variable2:O", y="variable:O")
   
@@ -92,7 +107,7 @@ def figures(train_df):
       .configure_legend(titleFontSize=15)
   )
 
-
+#save correlation plot to results folder
   save(cor_plot, "results/cor_plot.png")
 
   return quality_fig, repeat_plots, cor_plot

@@ -10,6 +10,7 @@ dependencies:
   - vega_datasets
   - altair_saver
   - scikit-learn>=1.0
-  - pip
+  - pandas-profiling>=1.4.3
   - pip:
     - rpy2
+    - docopt==0.6.2
