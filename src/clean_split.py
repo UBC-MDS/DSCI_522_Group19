@@ -15,6 +15,7 @@ Options:
 
 import pandas as pd
 import numpy as np
+import os
 from sklearn.model_selection import train_test_split
 
 from docopt import docopt
@@ -47,10 +48,14 @@ def main(input_red, input_white, out_dir):
     train_df, test_df = train_test_split(wine_df_original, test_size=0.2, random_state=123)
     X_train, X_test, y_train, y_test = split_for_train_test(wine_df_original, target_column='quality', test_size=0.2, random_state=123)
     
-    for df in [train_df, test_df, X_train, X_test, y_train, y_test]:
-        for out_name in ['train_df', 'test_df', 'X_train', 'X_test', 'y_train', 'y_test']:
-            df.to_csv(out_dir + out_name + '.csv', index=False)
-    
+    #Writing to csvs:
+    write_to_csv(train_df, out_dir, 'train_df.csv')
+    write_to_csv(test_df, out_dir, 'test_df.csv')
+    write_to_csv(X_train, out_dir, 'X_train.csv')
+    write_to_csv(X_test, out_dir, 'X_test.csv')
+    write_to_csv(y_train, out_dir, 'y_train.csv')
+    write_to_csv(y_test, out_dir, 'y_test.csv')
+
     
 def combine_dataframes(input_red, input_white):
     """
@@ -98,7 +103,28 @@ def split_for_train_test(original_df, target_column, test_size=0.2, random_state
     
     return X_train, X_test, y_train, y_test
     
+def write_to_csv(df, out_dir, out_name):
+    """
+    Checks whether folder with preprocessed data exists and writes there dataframes in csv format
+
+    Parameters:
+    ----------
+    df : dataframe such as train_df or test_df
+    out_dir: directory  where output files should be saved
+    out_name : names of csv file
+
+    Returns:
+    --------
+    creates csvs in "out_dir" folder
     
+    """
+    out_full_path = out_dir + out_name
+    try:
+        df.to_csv(out_full_path, index=False)
+    except:
+        os.makedirs(os.path.dirname(out_full_path))
+        df.to_csv(out_full_path, index=False)
+
     
 if __name__ == "__main__":
     main(opt['--input_red'], opt['--input_white'], opt['--out_dir'])    
