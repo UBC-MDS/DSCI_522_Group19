@@ -1,9 +1,3 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
-
 # Wine Quality Score Predictor
 
 Contributors: Kingslin Lv, Manju Neervaram Abhinandana Kumar, Zack Tang,
