@@ -57,6 +57,28 @@ if (window.hljs) {
 
 
 
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 
 
@@ -190,14 +212,14 @@ pre code {
 </div>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>The wine industry shows a recent extensive growth and the industry experts are using product quality certifications to promote their products[@orth2001quality]. This is a time-consuming process and requires the assessment given by human experts, which makes this process very expensive. The wine market would be of interest if the human quality of tasting can be related to wine’s chemical properties so that quality assessment processes are more controlled. This project aims to build a machine learning model for purpose of predicting the wine quality score based on each of its specific chemical properties. This task will likely require a lot of domain knowledge and according to a paper published by Dr. P. Cortez, Dr. A. Cerdeira, Dr. F. Almeida, Dr. T. Matos and Dr. J. Reis they were able to demonstrate the results of a data mining approach had promising results compared to alternative neural network methods [@CORTEZ2009547].</p>
+<p>The wine industry shows a recent extensive growth and the industry experts are using product quality certifications to promote their products<span class="citation">(Orth and Krška 2001)</span>. This is a time-consuming process and requires the assessment given by human experts, which makes this process very expensive. The wine market would be of interest if the human quality of tasting can be related to wine’s chemical properties so that quality assessment processes are more controlled. This project aims to build a machine learning model for purpose of predicting the wine quality score based on each of its specific chemical properties. This task will likely require a lot of domain knowledge and according to a paper published by Dr. P. Cortez, Dr. A. Cerdeira, Dr. F. Almeida, Dr. T. Matos and Dr. J. Reis they were able to demonstrate the results of a data mining approach had promising results compared to alternative neural network methods <span class="citation">(Cortez et al. 2009)</span>.</p>
 <p>This model is useful to support wine tasting evaluations. Quality evaluation is part of wine certification process and can be used to improve wine making and classify wines to premium brands which can be useful for setting prices and for marketing purposes based on consumer tastes. It should be noted that using taste as a sensory measurement for wine quality could be quite unreliable. We are also interested in exploring to what extent the score depends on other sensory information such as color of wine. Potentially, human brain could be processing taste and visual information differently rather than taste only. Thus, we are not expecting to obtain a really high test score.</p>
 </div>
 <div id="methods" class="section level1">
 <h1>Methods</h1>
 <div id="data" class="section level2">
 <h2>Data</h2>
-<p>The dataset used in this project is retrieved from the University of California Irvine (UCI) machine learning repository [@Dua2019] and was collected by Paulo Cortez, University of Minho, Guimarães, Portugal and A. Cerdeira, F. Almeida, T. Matos with help from J. Reis, Viticulture Commission of the Vinho Verde Region(CVRVV), Porto, Portugal in 2009. This dataset contains the results of various physiochemical test, including scoring for properties like fixed acidity, volatile acidity, citric acid, residual sugar, chlorides, free sulfur dioxide, total sulfur dioxide, density, pH, sulphates, and alcohol (11 features), which were preformed on white “Vinho Verde” wine samples from Northern Portugal. The data used in our analysis can be found <a href="https://archive.ics.uci.edu/ml/datasets/wine+quality">here</a>. Additionally, we add one more feature by concatenating white and red wine data, and so there is a binary feature; we think potentially human’s perception of wine type may affect the independent scoring on the wine quality, thus, we added a binary feature to account for this factor.</p>
+<p>The dataset used in this project is retrieved from the University of California Irvine (UCI) machine learning repository <span class="citation">(Dua and Graff 2017)</span> and was collected by Paulo Cortez, University of Minho, Guimarães, Portugal and A. Cerdeira, F. Almeida, T. Matos with help from J. Reis, Viticulture Commission of the Vinho Verde Region(CVRVV), Porto, Portugal in 2009. This dataset contains the results of various physiochemical test, including scoring for properties like fixed acidity, volatile acidity, citric acid, residual sugar, chlorides, free sulfur dioxide, total sulfur dioxide, density, pH, sulphates, and alcohol (11 features), which were preformed on white “Vinho Verde” wine samples from Northern Portugal. The data used in our analysis can be found <a href="https://archive.ics.uci.edu/ml/datasets/wine+quality">here</a>. Additionally, we add one more feature by concatenating white and red wine data, and so there is a binary feature; we think potentially human’s perception of wine type may affect the independent scoring on the wine quality, thus, we added a binary feature to account for this factor.</p>
 <p>No additional features or specific branding of each wine is available in the dataset for privacy purposes. Each row in the dataset represents a single wine which was tested and scored based on human sensory data.</p>
 </div>
 <div id="analysis" class="section level2">
@@ -223,12 +245,12 @@ Figure 2. Data distribution of numeric features in training datasets.
 Figure 3. Quality distribution of wines in the training and test datasets.
 </p>
 </div>
-<p>The data was processed through the pandas package; EDA was plotted using python the library Altair and the preliminary insights on EDA was using the pandas-profiling package [@reback2020pandas] [@pandasprofiling2019]. This report was compiled using an R document file with scripts running via the docopt package [@R], [@docopt]. Tables were stored via csv files and displayed using knitr’s kable function [@knitr], [@rmarkdown]. After tuning the model, we will use test data set to do the final check of the accuracy. If the result is not satisfactory, we will make further adjustments based on the new issue found.</p>
+<p>The data was processed through the pandas package; EDA was plotted using python the library Altair and the preliminary insights on EDA was using the pandas-profiling package <span class="citation">(team 2020)</span> <span class="citation">(Brugman 2019)</span>. This report was compiled using an R document file with scripts running via the docopt package <span class="citation">(R Core Team 2019)</span>, <span class="citation">(de Jonge 2020)</span>. Tables were stored via csv files and displayed using knitr’s kable function <span class="citation">(Xie 2020)</span>, <span class="citation">(Allaire et al. 2020)</span>. After tuning the model, we will use test data set to do the final check of the accuracy. If the result is not satisfactory, we will make further adjustments based on the new issue found.</p>
 </div>
 </div>
 <div id="results-discussion" class="section level1">
 <h1>Results &amp; Discussion</h1>
-<p>After we decided to approach our problem as regression issue, we chose to use four typical regression supervised learning models <code>Ridge</code>, <code>OneVsRestClassifier</code>, <code>SVC</code>, and <code>RandomForestRegressor</code>[@Python], @scikit-learn]. To better understand the performance of our selected models, we decided to evaluate negative mean squared error, negative root mean squared error, negative mean absolute error, r squared and MAPE scores given this is a regression issue with multiple feature coefficients. The cross-validation scores for each model is summarized in the Table 1. We discovered that <code>RandomForestRegressor</code> returned the highest cross-validation score, and so next we decided to further tune the <code>RandomForestRegressor</code> model via feature selection and hyper-parameter optimization.</p>
+<p>After we decided to approach our problem as regression issue, we chose to use four typical regression supervised learning models <code>Ridge</code>, <code>OneVsRestClassifier</code>, <code>SVC</code>, and <code>RandomForestRegressor</code><span class="citation">(Van Rossum and Drake 2009)</span>, <span class="citation">(Pedregosa et al. 2011)</span>. To better understand the performance of our selected models, we decided to evaluate negative mean squared error, negative root mean squared error, negative mean absolute error, r squared and MAPE scores given this is a regression issue with multiple feature coefficients. The cross-validation scores for each model is summarized in the Table 1. We discovered that <code>RandomForestRegressor</code> returned the highest cross-validation score, and so next we decided to further tune the <code>RandomForestRegressor</code> model via feature selection and hyper-parameter optimization.</p>
 <p>We applied Recursive Features Elimination (RFE) for preliminary feature selections, and limit the number of features as 10 in order to make the model more efficient. Through this algorithm we determined to drop <code>type</code> and <code>fixed acidity</code> features, and we are able to achieve very similar scores with lesser features as displayed in the Table 1. This process simplifies our model and it’s cost-efficient for future data collection.</p>
 <table>
 <caption>Table 1. Table of cross-validation results for each tested model</caption>
@@ -374,8 +396,43 @@ Figure 3. Quality distribution of wines in the training and test datasets.
 <h1>Limitations &amp; Future</h1>
 <p>The wine classification is a challenging task as it relies on sensory analysis performed by human tasters. These evaluations are based on the experience and knowledge of experts which are prone to subjective factors. One of main limitation here is that the dataset is imbalanced. The majority of quality scores were 5 and 6.Another limitation is that the dataset has only 12 features with one of binary feature that seems not to add any values to our model. We could also potentially find a larger dataset (i.e.with wine from around the world) or with more features since the one we are currently working with has a limited number of features (i.e.type of grape used in the wine) due for the sake of privacy protection.</p>
 </div>
-<div id="references" class="section level1">
-<h1>References</h1>
+<div id="references" class="section level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-rmarkdown" class="csl-entry">
+Allaire, JJ, Yihui Xie, Jonathan McPherson, Javier Luraschi, Kevin Ushey, Aron Atkins, Hadley Wickham, Joe Cheng, Winston Chang, and Richard Iannone. 2020. <em>Rmarkdown: Dynamic Documents for r</em>. <a href="https://github.com/rstudio/rmarkdown">https://github.com/rstudio/rmarkdown</a>.
+</div>
+<div id="ref-pandasprofiling2019" class="csl-entry">
+Brugman, Simon. 2019. <span>“<span class="nocase">pandas-profiling: Exploratory Data Analysis for Python</span>.”</span> <a href="https://github.com/pandas-profiling/pandas-profiling">https://github.com/pandas-profiling/pandas-profiling</a>.
+</div>
+<div id="ref-CORTEZ2009547" class="csl-entry">
+Cortez, Paulo, Antonio Cerdeira, Fernando Almeida, Telmo Matos, and Jose Reis. 2009. <span>“Modeling Wine Preferences by Data Mining from Physicochemical Properties.”</span> <em>Decision Support Systems</em> 47 (4): 547–53. https://doi.org/<a href="https://doi.org/10.1016/j.dss.2009.05.016">https://doi.org/10.1016/j.dss.2009.05.016</a>.
+</div>
+<div id="ref-docopt" class="csl-entry">
+de Jonge, Edwin. 2020. <em>Docopt: Command-Line Interface Specification Language</em>. <a href="https://CRAN.R-project.org/package=docopt">https://CRAN.R-project.org/package=docopt</a>.
+</div>
+<div id="ref-Dua2019" class="csl-entry">
+Dua, Dheeru, and Casey Graff. 2017. <span>“<span>UCI</span> Machine Learning Repository.”</span> University of California, Irvine, School of Information; Computer Sciences. <a href="http://archive.ics.uci.edu/ml">http://archive.ics.uci.edu/ml</a>.
+</div>
+<div id="ref-orth2001quality" class="csl-entry">
+Orth, Ulrich R, and Pavel Krška. 2001. <span>“Quality Signals in Wine Marketing: The Role of Exhibition Awards.”</span> <em>The International Food and Agribusiness Management Review</em> 4 (4): 385–97.
+</div>
+<div id="ref-scikit-learn" class="csl-entry">
+Pedregosa, F., G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, M. Blondel, et al. 2011. <span>“Scikit-Learn: Machine Learning in <span>P</span>ython.”</span> <em>Journal of Machine Learning Research</em> 12: 2825–30.
+</div>
+<div id="ref-R" class="csl-entry">
+R Core Team. 2019. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+<div id="ref-reback2020pandas" class="csl-entry">
+team, The pandas development. 2020. <em>Pandas-Dev/Pandas: Pandas</em> (version latest). Zenodo. <a href="https://doi.org/10.5281/zenodo.3509134">https://doi.org/10.5281/zenodo.3509134</a>.
+</div>
+<div id="ref-Python" class="csl-entry">
+Van Rossum, Guido, and Fred L. Drake. 2009. <em>Python 3 Reference Manual</em>. Scotts Valley, CA: CreateSpace.
+</div>
+<div id="ref-knitr" class="csl-entry">
+Xie, Yihui. 2020. <em>Knitr: A General-Purpose Package for Dynamic Report Generation in r</em>. <a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>.
+</div>
+</div>
 </div>
 
 
