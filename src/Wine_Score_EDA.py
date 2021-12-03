@@ -55,7 +55,7 @@ def figures(train_df, out_dir):
     cor_plot   
   """
   #create quality figure distribution - quality_fig
-  quality_fig = alt.Chart(train_df).mark_bar().encode(
+  quality_fig = alt.Chart(train_df, title = "Distribution of quality scores").mark_bar().encode(
     x=alt.X('quality', bin=alt.Bin(maxbins=7)),
     y='count()',
     tooltip='count()')
@@ -71,7 +71,7 @@ def figures(train_df, out_dir):
       .columns.to_list()
       ),
       columns=3
-      ))
+      )).properties(title="Data distribution of numeric features in training datasets")
 
     #create correlation figure - cor_plot
   cor_data = (
@@ -85,7 +85,7 @@ def figures(train_df, out_dir):
       "{:.2f}".format
   )  
   
-  base = alt.Chart(cor_data).encode(x="variable2:O", y="variable:O")
+  base = alt.Chart(cor_data, title = "Quality distribution of wines in the training and test datasets").encode(x="variable2:O", y="variable:O")
   
   text = base.mark_text().encode(
       text="correlation_label",
