@@ -17,19 +17,21 @@ Paval Levchenko
 In this project we aim to predict the wine quality scores ranging from 0
 to 10 based on physicochemical properties of wines and sensory tests. To
 answer this predictive question, we decided to build a regression model.
-We analyzed the distribution of each feature and correlation between
-features and the target. Then performed cross-validation on possible
-models like Ridge, SVR, OneVsRest Logistic regression and Random Forest.
-We concluded that the Random Forest model delivers a much higher
-validation score, but there was a clear problem of overfitting. We
-further did feature selection and hyperparameter optimization in an
-attempt to reduce the score gap between train and test data. We were
-able to drop number of features but maintain the relatively similar
-score through this process. Unfortunately, the test score with the best
+
+Through our exploratory data analysis we analyzed the distribution of
+each feature and correlation between features and the target. Followed
+by the cross-validation process based on feature input, we concluded
+that the Random Forest Regressor delivers a much higher training score,
+but there was a clear problem of overfitting. We further conducted
+feature selection and hyperparameter optimization in an attempt to
+reduce the score gap between train and test scores. We were able to drop
+a number of features but maintain a relatively similar score through
+this process. Unfortunately, the test score with our best
 hyperparameters was only around 0.532, which is fairly acceptable. Next,
-we potentially can improve our model prediction score by using a larger
-dataset with more features and build a more high score model with its
-best hyperparameters.
+we can potentially improve our model prediction score by using a larger
+dataset with more features or build a higher score model with its best
+hyperparameters.
+
 
 # Introduction
 
@@ -44,20 +46,21 @@ build a machine learning model for purpose of predicting the wine
 quality score based on each of its specific chemical properties. This
 task will likely require a lot of domain knowledge and according to a
 paper published by Dr. P. Cortez, Dr. A. Cerdeira, Dr. F. Almeida,
-Dr. T. Matos and Dr. J. Reis they were able to demonstrate the results
-of a data mining approach had promising results compared to alternative
+Dr. T. Matos and Dr. J. Reis they were able to demonstrate the data
+mining approach could have a promising result compared to alternative
 neural network methods (Cortez et al. 2009).
 
-This model is useful to support wine tasting evaluations. Quality
-evaluation is part of wine certification process and can be used to
-improve wine making and classify wines to premium brands which can be
-useful for setting prices and for marketing purposes based on consumer
-tastes. It should be noted that using taste as a sensory measurement for
-wine quality could be quite unreliable. We are also interested in
-exploring to what extent the score depends on other sensory information
-such as color of wine. Potentially, human brain could be processing
-taste and visual information differently rather than taste only. Thus,
-we are not expecting to obtain a really high test score.
+Our model is useful to support wine tasting evaluations. Quality
+evaluation is a part of wine certification process and can be used to
+improve wine making or spot premium wines for a more proper price
+according to customer taste preferences. Additionally, using human taste
+as a sensory measurement for wine quality could be quite unreliable (De
+Mets et al. 2017). We are also interested in exploring to what extent
+the score depends on other sensory information such as color of wine.
+Potentially, human brain could be processing taste and visual
+information differently rather than taste only. Thus, we are not
+expecting to obtain a really high test score to our machine learning
+model.
 
 # Methods
 
@@ -78,68 +81,19 @@ Portugal. The data used in our analysis can be found
 Additionally, we add one more feature by concatenating white and red
 wine data, and so there is a binary feature; we think potentially
 human’s perception of wine type may affect the independent scoring on
-the wine quality, thus, we added a binary feature to account for this
-factor.
+the wine quality, and so we added a binary feature to account for this
+factor. Thus, there are 5197 instances and 12 features upon we combined
+both red and white wine data.
 
-No additional features or specific branding of each wine is available in
-the dataset for privacy purposes. Each row in the dataset represents a
-single wine which was tested and scored based on human sensory data.
+One of drawback of our raw data is that there is no additional feature
+or specific branding of each wine available in the dataset for privacy
+purposes. Each row in the dataset represents a single wine which was
+tested and scored based on human sensory data.
 
 ## Analysis
 
 As the first step towards building the model to answer the predictive
-question posed above we split the data into train and test data set at
-80% and 20% level. We performed our exploratory data analysis on the
-training data. Firstly, we plotted the distribution of the quality
-scores for each wine (Figure 1). Despite the quality scoring being
-performed a scale from 1-10 only values in the range of 3-9 were
-observed. It can be seen that there is a class imbalance, there are more
-examples for scores 5 and 6 and scores 3,4 and 9 are rarely observed.
 
-To handle the class imbalance, we employed oversampling technique.
-
-<img src="../results/quality_dist.png" title="Figure 1. Distribution of quality scores" alt="Figure 1. Distribution of quality scores" width="30%" />
-
-It is evident from the data distribution of numeric features that there
-are outliers. In order to reduce the skewness,we performed scaling on
-the numeric features.
-
-<img src="../results/repeat_plots.png" title="Figure 2. Data distribution of numeric features in training datasets." alt="Figure 2. Data distribution of numeric features in training datasets." width="100%" />
-
-We explored the relation between features as shown in correlation matrix
-Figure 3. We identified that some features are highly correlated and a
-few others are not. The features volatile.acidity, sulphates and alcohol
-are the attributes most correlated with quality of wine. Thus, these 3
-attributes are most relevant. We dropped features that have smaller
-correlations such as fixed acidity and type.
-
-<img src="../results/cor_plot.png" title="Figure 3. Quality distribution of wines in the training and test datasets." alt="Figure 3. Quality distribution of wines in the training and test datasets." width="60%" />
-
-The data was processed through the pandas package; EDA was plotted using
-python library Altair and the preliminary insights on EDA was using the
-pandas-profiling package (team 2020) (Brugman 2019). This report was
-compiled using an R document file with scripts running via the docopt
-package (R Core Team 2019), (de Jonge 2020). Tables were stored via csv
-files and displayed using knitr’s kable function (Xie 2020), (Allaire et
-al. 2020).
-
-# Results & Discussion
-
-We chose four typical regression supervised learning models `Ridge`,
-`OneVsRest Logistic regression`, `SVR`, and `RandomForestRegressor`(Van
-Rossum and Drake 2009), (Pedregosa et al. 2011). To evaluate the model,
-we used scoring metrics such as negative mean squared error, negative
-root mean squared error, negative mean absolute error, r squared and
-MAPE scores given this is a regression issue with multiple feature
-coefficients. The cross-validation scores for each model is summarized
-in Table 1. We discovered that `RandomForestRegressor` returned the
-highest validation score. We tuned the `RandomForestRegressor` model via
-feature selection and hyper-parameter optimization.
-
-We applied Recursive Features Elimination (RFE) for preliminary feature
-selections, and limit the number of features as 10 in order to make the
-model more efficient. Through this algorithm we determined to drop
-`type` and `fixed acidity` features, and we are able to achieve very
 similar scores with lesser features as displayed in the Table 1. This
 process simplified our model and is cost-efficient for future data
 collection.
@@ -171,45 +125,7 @@ Random Forest_rfe
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-fit_time
-</td>
-<td style="text-align:left;">
-0.005 (+/- 0.001)
-</td>
-<td style="text-align:left;">
-0.638 (+/- 0.011)
-</td>
-<td style="text-align:left;">
-0.061 (+/- 0.003)
-</td>
-<td style="text-align:left;">
-1.436 (+/- 0.003)
-</td>
-<td style="text-align:left;">
-5.425 (+/- 0.035)
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-score_time
-</td>
-<td style="text-align:left;">
-0.002 (+/- 0.001)
-</td>
-<td style="text-align:left;">
-0.339 (+/- 0.003)
-</td>
-<td style="text-align:left;">
-0.003 (+/- 0.000)
-</td>
-<td style="text-align:left;">
-0.017 (+/- 0.000)
-</td>
-<td style="text-align:left;">
-0.016 (+/- 0.000)
-</td>
+
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -454,15 +370,15 @@ test_score
 
 The wine classification is a challenging task as it relies on sensory
 analysis performed by human tasters. These evaluations are based on the
-experience and knowledge of experts which are prone to subjective
+experience and knowledge of experts which are prone to be subjective
 factors. One of main limitation here is that the dataset is imbalanced.
-The majority of quality scores were 5 and 6.Another limitation is that
+The majority of quality scores were 5 and 6. Another limitation is that
 the dataset has only 12 features with one of binary feature that seems
 not to add any values to our model. We could also potentially find a
-larger dataset (i.e.with wine from around the world) or with more
-features since the one we are currently working with has a limited
-number of features (i.e.type of grape used in the wine) due for the sake
-of privacy protection.
+larger dataset (i.e.with wine from different parts of the world) or with
+more features since the one we are currently working with has a limited
+number of features (i.e. lack of type of grape used in the wine) due for
+the sake of privacy protection.
 
 # References
 
@@ -499,9 +415,12 @@ https://doi.org/<https://doi.org/10.1016/j.dss.2009.05.016>.
 de Jonge, Edwin. 2020. *Docopt: Command-Line Interface Specification
 Language*. <https://CRAN.R-project.org/package=docopt>.
 
-</div>
 
-<div id="ref-Dua2019" class="csl-entry">
+De Mets, Guido, Peter Goos, Maarten Hertog, Christian Peeters, Jeroen
+Lammertyn, and Bart M Nicolaı̈. 2017. “Sensory Quality of Wine: Quality
+Assessment by Merging Ranks of an Expert-Consumer Panel.” *Australian
+Journal of Grape and Wine Research* 23 (3): 318–28.
+
 
 Dua, Dheeru, and Casey Graff. 2017. “UCI Machine Learning Repository.”
 University of California, Irvine, School of Information; Computer
