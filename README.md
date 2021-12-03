@@ -16,26 +16,14 @@ The final report can be found [here](https://github.com/UBC-MDS/DSCI_522_Group19
 
 ## Usage
 
-To replicate the analysis, clone this GitHub repository, install the [dependencies](#dependencies) listed below, and run the following commands at the command line/terminal from the root directory of this project:
-
-    # download wine data set to directory
-    python src/download_data.py --url="https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv" --out_file="data/raw/winequality-red.csv"
-    python src/download_data.py --url="https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv" --out_file="data/raw/winequality-white.csv"
-
-
-    # pre-process data and split data to training set and test set
-    python src/clean_split.py --input_red="data/raw/winequality-red.csv" --input_white="data/raw/winequality-white.csv" --out_dir="data/processed/"
-
-
-    # create exploratory data analysis figure and write to file
-    python src/Wine_Score_EDA.py --input_file="data/processed/train_df.csv"
-
-
-    # fitting model and generating final results on the test data
-    python src/model_fitting.py --X_train_path="data/processed/X_train.csv" --X_test_path="data/processed/X_test.csv" --y_train_path="data/processed/y_train.csv" --y_test_path="data/processed/y_test.csv"
-
-    # render final report (RStudio terminal)
-    Rscript -e "rmarkdown::render('reports/reports.Rmd', output_format = 'github_document')"
+To replicate the analysis, clone this GitHub repository, install the [dependencies](#dependencies) listed below, and run the following commands from the main directory of the project:
+```
+make all
+```
+To reset the repo to a clean state, with no intermediate or results files, run the following command at the command line/terminal from the root directory of this project:
+```
+make clean
+```
 
 ## Dependencies {#dependencies}
 
