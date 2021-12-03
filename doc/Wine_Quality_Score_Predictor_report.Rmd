@@ -2,19 +2,21 @@
 title: "Predicting wine quality score from various characteristics"
 author: "Group 19 - Kingslin Lv, Manju Neervaram Abhinandana Kumar, Zack Tang, Paval Levchenko"
 bibliography: references_wine_score_predictor.bib
+always_allow_html: true
 output: 
-  html_document: 
+  html_document:
+    toc: true
+  md_document:
     toc: true
   github_document:
-    toc: true
-  md_document: 
     toc: true
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 library(knitr)
 library(tidyverse)
+library(kableExtra)
 
 cv_scores_df <- read_csv("../results/cv_scores_for_alternative_methods.csv")
 final_results_df <- read_csv("../results/final_results.csv")
@@ -22,7 +24,7 @@ final_results_df <- read_csv("../results/final_results.csv")
 
 # Summary
 
-In this project we aim to predict the wine quality scores ranging from 0 to 10 based on physicochemical properties of wines sensory tests. To answer this predictive question, we decided to build a regression model. Through our exploratory data analysis we analyzed the distribution of each feature and correlation between features and the target. Then through the cross-validation process based on feature input, we concluded that the Random Forest model delivers a much higher training score, but there was a clear problem of overfitting. We further conducted feature selection and hyperparameter optimization in an attempt to reduce the score gap between train and test data. We were able to drop number of features but maintain the relatively similar score through this process. Unfortunately, the test score with the best hyperparameters was only around 0.52, which is fairly acceptable. Next, we potentially can improve our model prediction score by using a larger dataset with more features and build a more high score model with its best hyperparameters.
+In this project we aim to predict the wine quality scores ranging from 0 to 10 based on physicochemical properties of wines and sensory tests. To answer this predictive question, we decided to build a regression model. We analyzed the distribution of each feature and correlation between features and the target. Then performed cross-validation on possible models like Ridge, SVR, OneVsRest Logistic regression and Random Forest. We concluded that the Random Forest model delivers a much higher validation score, but there was a clear problem of overfitting. We further did feature selection and hyperparameter optimization in an attempt to reduce the score gap between train and test data. We were able to drop number of features but maintain the relatively similar score through this process. Unfortunately, the test score with the best hyperparameters was only around `r final_results_df[[6,2]]`, which is fairly acceptable. Next, we potentially can improve our model prediction score by using a larger dataset with more features and build a more high score model with its best hyperparameters.
 
 # Introduction
 
@@ -40,42 +42,46 @@ No additional features or specific branding of each wine is available in the dat
 
 ## Analysis
 
-As the first step towards building the model to answer the predictive question posed above we split the data into train and test data set at 80% and 20% level. We performed our exploratory data analysis on the training data frame. Firstly, we plotted the distribution of the quality scores for each wine (Figure 1). Despite the quality scoring being performed a scale from 1-10 only values in the range of 3-9 were observed. It can be seen that our data is significantly imbalanced, with 6 being the most common score observed across all testing while scores such as 3 and 9 were rarely seen.
+As the first step towards building the model to answer the predictive question posed above we split the data into train and test data set at 80% and 20% level. We performed our exploratory data analysis on the training data. Firstly, we plotted the distribution of the quality scores for each wine (Figure 1). Despite the quality scoring being performed a scale from 1-10 only values in the range of 3-9 were observed. It can be seen that there is a class imbalance, there are more examples for scores 5 and 6 and scores 3,4 and 9 are rarely observed.
+
+To handle the class imbalance, we employed oversampling technique.
 
 ```{r fig_1, echo=FALSE, fig.cap="Figure 1. Distribution of quality scores", out.width = '30%'}
 knitr::include_graphics("../results/quality_dist.png")
 ```
 
-After taking a look at the distributions of our 11 numerical features, and we realized all attributes have outliers with extreme value. We will have to scale numerical features in order to reduce skewness at the process of building the model. Also, there is a class imbalance issues as revealed from the distribution plot.
+It is evident from the data distribution of numeric features that there are outliers. In order to reduce the skewness,we performed scaling on the numeric features.
 
 ```{r fig_2, echo=FALSE, fig.cap="Figure 2. Data distribution of numeric features in training datasets.", out.width = '100%'}
 knitr::include_graphics("../results/repeat_plots.png")
 ```
 
-By exploring the features correlation matrix Figure 3, we identified that some features are highly correlated, and we choose to drop some redundant features in the process of feature selection. By the below correlation matrix, volatile.acidity, sulphates and alcohol are the attributes most correlated with quality of wine. Thus, these 3 attributes are most relevant. We might drop some features that have smaller correlations such as fixed acidity and type. We will further identify this through our model establishment process.
+We explored the relation between features as shown in correlation matrix Figure 3. We identified that some features are highly correlated and a few others are not. The features volatile.acidity, sulphates and alcohol are the attributes most correlated with quality of wine. Thus, these 3 attributes are most relevant. We dropped features that have smaller correlations such as fixed acidity and type.
 
 ```{r fig_3, echo=FALSE, fig.cap="Figure 3. Quality distribution of wines in the training and test datasets.", out.width = '60%'}
 knitr::include_graphics("../results/cor_plot.png")
 ```
 
-The data was processed through the pandas package; EDA was plotted using python the library Altair and the preliminary insights on EDA was using the pandas-profiling package [@reback2020pandas] [@pandasprofiling2019]. This report was compiled using an R document file with scripts running via the docopt package [@R], [@docopt]. Tables were stored via csv files and displayed using knitr's kable function [@knitr], [@rmarkdown]. After tuning the model, we will use test data set to do the final check of the accuracy. If the result is not satisfactory, we will make further adjustments based on the new issue found.
+The data was processed through the pandas package; EDA was plotted using python library Altair and the preliminary insights on EDA was using the pandas-profiling package [@reback2020pandas] [@pandasprofiling2019]. This report was compiled using an R document file with scripts running via the docopt package [@R], [@docopt]. Tables were stored via csv files and displayed using knitr's kable function [@knitr], [@rmarkdown]. 
 
 # Results & Discussion
 
-After we decided to approach our problem as regression issue, we chose to use four typical regression supervised learning models `Ridge`, `OneVsRestClassifier`, `SVC`, and `RandomForestRegressor`[@Python], [@scikit-learn]. To better understand the performance of our selected models, we decided to evaluate negative mean squared error, negative root mean squared error, negative mean absolute error, r squared and MAPE scores given this is a regression issue with multiple feature coefficients. The cross-validation scores for each model is summarized in the Table 1. We discovered that `RandomForestRegressor` returned the highest cross-validation score, and so next we decided to further tune the `RandomForestRegressor` model via feature selection and hyper-parameter optimization.
+We chose four typical regression supervised learning models `Ridge`, `OneVsRest Logistic regression`, `SVR`, and `RandomForestRegressor`[@Python], [@scikit-learn]. To evaluate the model, we used scoring metrics such as negative mean squared error, negative root mean squared error, negative mean absolute error, r squared and MAPE scores given this is a regression issue with multiple feature coefficients. The cross-validation scores for each model is summarized in Table 1. We discovered that `RandomForestRegressor` returned the highest validation score. We tuned the `RandomForestRegressor` model via feature selection and hyper-parameter optimization.
 
-We applied Recursive Features Elimination (RFE) for preliminary feature selections, and limit the number of features as 10 in order to make the model more efficient. Through this algorithm we determined to drop `type` and `fixed acidity` features, and we are able to achieve very similar scores with lesser features as displayed in the Table 1. This process simplifies our model and it's cost-efficient for future data collection.
+We applied Recursive Features Elimination (RFE) for preliminary feature selections, and limit the number of features as 10 in order to make the model more efficient. Through this algorithm we determined to drop `type` and `fixed acidity` features, and we are able to achieve very similar scores with lesser features as displayed in the Table 1. This process simplified our model and is cost-efficient for future data collection.
 
 ```{r table_1, echo=FALSE, out.width = '60%'}
 kable(cv_scores_df,
-      caption="Table 1. Table of cross-validation results for each tested model")
+      caption="Table 1. Cross-validation results for each model") |> 
+  kable_styling(full_width = FALSE)
 ```
 
-Finally, we conducted hyperparameter optimization as `RandomForestRegressor` encountered severe overfitting issue. The best hyperparameters we obtained from the algorithm are `max_depth` at `r final_results_df[[1,2]]`, `max_leaf_nodes` at `r final_results_df[[2,2]]`, and `n_estimators`at `r final_results_df[[3,2]]` The best cross-validation score is `r final_results_df[[4,2]]` using the best hyperparameter. The score for test data set is `r final_results_df[[6,2]]` upon tunning hyper-parameters; however, as we discovered above, the train score is `r final_results_df[[5,2]]` as displayed in the Table 2, which indicates that we still have overfitting issue for the `RandomForestRegressor` model.
+Finally, we conducted hyperparameter optimization as `RandomForestRegressor` encountered severe overfitting issue. The best hyperparameters we obtained from the algorithm are `max_depth` at `r final_results_df[[1,2]]`, `max_leaf_nodes` at `r final_results_df[[2,2]]`, and `n_estimators`at `r final_results_df[[3,2]]` The best cross-validation score is `r final_results_df[[4,2]]` using the best hyperparameter. The score for test data set is `r final_results_df[[6,2]]` upon tuning hyper-parameters; however, as we discovered above, the train score is `r final_results_df[[5,2]]` as displayed in the Table 2, which indicates that we still have overfitting issue for the `RandomForestRegressor` model.
 
 ```{r table_2, echo=FALSE, out.width = '60%'}
 kable(final_results_df,
-       caption="Table 2. Tuned (+ reduced features) RandomForestRegressor model test results.")
+       caption="Table 2. RandomForestRegressor model test results.") |> 
+  kable_styling(full_width = FALSE)
 ```
 
 # Limitations & Future
