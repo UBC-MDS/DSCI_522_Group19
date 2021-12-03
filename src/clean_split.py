@@ -70,8 +70,8 @@ def combine_dataframes(input_red, input_white):
     --------
     wine_df : concatanates data from two dataframes
     """
-    red_df = pd.read_csv(input_red, sep=";")
-    white_df = pd.read_csv(input_white, sep=";")
+    red_df = pd.read_csv(input_red, sep=",")
+    white_df = pd.read_csv(input_white, sep=",")
     
 
     red_df['wine_type'] = 'red_wine'
