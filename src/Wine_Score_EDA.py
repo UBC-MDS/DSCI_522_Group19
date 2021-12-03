@@ -107,7 +107,7 @@ def figures(train_df, out_dir):
 
 #saves all plots to results folder
 
-  quality_fig.save(f'{out_dir}/quality_fig.png')
+  quality_fig.save(f'{out_dir}/quality_dist.png')
   repeat_plots.save(f'{out_dir}/repeat_plots.png')
   cor_plot.save(f'{out_dir}/cor_plot.png')
 
