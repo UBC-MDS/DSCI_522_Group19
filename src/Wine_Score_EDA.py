@@ -4,20 +4,22 @@
 """
 Script for creating plots as part of exploratory data analysis
 
-Usage: Wine_Score_EDA.py --input_file=<input_file>
+Usage: Wine_Score_EDA.py --input_file=<input_file> --out_dir=<out_dir>
 
 Options: 
   
 --input_file=<input_file> Path (including filename) to processed data with "train_df"
+--out_dir=<out_dir>       Path to directory where the processed data should be written
 
 """
 
 # Example:
-# python src/Wine_Score_EDA.py --input_file=<input_file>
+# python src/Wine_Score_EDA.py --input_file=<input_file> --out_dir="out_dir"
 
 
 
 from docopt import docopt
+import os
 
 import pandas as pd
 import altair as alt
@@ -28,14 +30,15 @@ alt.renderers.enable('mimetype')
 
 opt = docopt(__doc__) 
 
-def main(input_file):
+def main(input_file, out_dir):
   # read train_df.csv file
   train_df=pd.read_csv(input_file)
-  figures(train_df)
+  figures(train_df, out_dir)
+  
 
 
 
-def figures(train_df):
+def figures(train_df, out_dir):
   """
   Creates and saves charts as images in results folder
 
@@ -51,16 +54,13 @@ def figures(train_df):
     repeat_plots
     cor_plot   
   """
-  #create quality figure distribution
+  #create quality figure distribution - quality_fig
   quality_fig = alt.Chart(train_df).mark_bar().encode(
     x=alt.X('quality', bin=alt.Bin(maxbins=7)),
     y='count()',
     tooltip='count()')
-  
-  #save quality_dist plot to results folder 
-  save(quality_fig, "results/quality_dist.png")
-  
-  #create numeric feature distribution
+   
+  #create numeric feature distribution - repeat_plots
   repeat_plots = (alt.Chart(train_df).mark_bar().encode(
     alt.X(alt.repeat(), type="quantitative", bin=alt.Bin(maxbins=40)),
     y="count()",
@@ -73,9 +73,7 @@ def figures(train_df):
       columns=3
       ))
 
-  #save feature count distribution plot to results folder
-  save(repeat_plots, "results/repeat_plots.png")
-  
+    #create correlation figure - cor_plot
   cor_data = (
     train_df.corr()
     .stack()
@@ -107,10 +105,12 @@ def figures(train_df):
       .configure_legend(titleFontSize=15)
   )
 
-#save correlation plot to results folder
-  save(cor_plot, "results/cor_plot.png")
+#saves all plots to results folder
 
-  return quality_fig, repeat_plots, cor_plot
-    
+  quality_fig.save(f'{out_dir}/quality_fig.png')
+  repeat_plots.save(f'{out_dir}/repeat_plots.png')
+  cor_plot.save(f'{out_dir}/cor_plot.png')
+
+
 if __name__ == "__main__":
-  main(opt['--input_file'])
+  main(opt['--input_file'], opt['--out_dir'])
