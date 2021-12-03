@@ -19,7 +19,7 @@ data/processed/train_df.csv data/processed/test_df.csv data/processed/X_train.cs
 
 # create exploratory data analysis figures
 results/quality_dist.png results/repeat_plots.png results/cor_plot.png : src/Wine_Score_EDA.py data/processed/train_df.csv 
-	python src/Wine_Score_EDA.py --input_file="data/processed/train_df.csv"
+	python src/Wine_Score_EDA.py --input_file="data/processed/train_df.csv" --out_dir="results"
 	
 # fit, tune and test model
 results/cv_scores_for_alternative_methods.csv results/final_results.csv : src/model_fitting.py
