@@ -14,6 +14,9 @@ Before you make a substantial pull request, you should always file an issue and 
 3. You may merge the Pull Request in once you have the sign-off of two other owners of the project, or if you do not have permission to do that, you may request the second reviewer to merge it for you.
 4. New code should follow the tidyverse [style guide](http://style.tidyverse.org) or PEP8 [style guide](https://www.python.org/dev/peps/pep-0008/).
 
+### Contact information 
+If you need to contact the team for contribution please follow above; or alternatively, you might contact one of our team members at <kingslin@student.ubc.ca>. We will have a group discussion if needed and then provide feedback as soon as possibly. 
+
 ### Code of Conduct
 
 Please note that this project is released with a [Contributor Code of
