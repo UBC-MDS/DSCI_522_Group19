@@ -49,6 +49,10 @@ from sklearn.feature_selection import SelectFromModel
 
 from scipy.stats import randint
 
+import imblearn
+from imblearn.pipeline import make_pipeline as make_imb_pipeline
+from imblearn.over_sampling import RandomOverSampler
+
 from docopt import docopt
 
 opt = docopt(__doc__)  # parse these into dictionary opt
@@ -206,10 +210,11 @@ def evalute_alternative_methods(X_train, y_train, preprocessor):
     
     results_comb={}
     for keys in models.keys():
-        pipe_comb = make_pipeline(preprocessor, models[keys])
+        pipe_comb = make_imb_pipeline(RandomOverSampler(sampling_strategy="minority"), preprocessor, models[keys])
         results_comb[keys]=mean_std_cross_val_scores(
-            pipe_comb, X_train, y_train.values.ravel(), return_train_score=True, scoring=score_types_reg
-        )
+            pipe_comb, X_train, y_train, return_train_score=True, scoring=score_types_reg
+    )
+    
     
     """
     After comparing different regression models by using various matrix, we found the better model is Random Forest, because we got highest cross-validation score. 
@@ -217,8 +222,8 @@ def evalute_alternative_methods(X_train, y_train, preprocessor):
     So, we further conduct feature selections and hyper-parameter optimization as follow:
     """
     rfe = RFE(RandomForestRegressor(random_state=123), n_features_to_select=10)
-    pipe_rf_rfe = make_pipeline(preprocessor, rfe, RandomForestRegressor(random_state=123))
-    results_comb['Random Forest_rfe'] = mean_std_cross_val_scores(pipe_rf_rfe, X_train, y_train.values.ravel(), return_train_score=True, scoring=score_types_reg)
+    pipe_rf_rfe = make_imb_pipeline(RandomOverSampler(sampling_strategy="minority"), preprocessor, rfe, RandomForestRegressor(random_state=123))
+    results_comb['Random Forest_rfe'] = mean_std_cross_val_scores(pipe_rf_rfe, X_train, y_train, return_train_score=True, scoring=score_types_reg)
 
 
     results_df = pd.DataFrame(results_comb)
