@@ -25,7 +25,7 @@ To reset the repo to a clean state, with no intermediate or results files, run t
 make clean
 ```
 
-## Dependencies {#dependencies}
+## Dependencies
 
 To run this project, please install
 
@@ -42,15 +42,20 @@ conda activate wine
 -   R version 4.0.2. and R packages:
 
     -   knitr==1.30
-
     -   feather==0.3.5
-
     -   kableExtra==1.3.1
-
     -   tidyverse==1.3.0
-
     -   docopt==0.6.2
 
+- GNU make 4.2.1
+  
+- Vega-Lite and Canvas
+    - these must be installed into base environment using command `npm install -g vega vega-lite vega-cli canvas`
+
+## Dependency diagram
+
+  <img src="./dependency.png" height="200" width="1000">
+  
 ## License
 
 Datasets of this project are licensed under a Creative Commons Attribution 4.0 International (CC BY 4.0) license. This allows for the sharing and adaptation of the datasets for any purpose, provided that the appropriate credit is given.
