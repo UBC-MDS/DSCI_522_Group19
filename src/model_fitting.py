@@ -91,7 +91,7 @@ def main(X_train_path, X_test_path, y_train_path, y_test_path):
     
     preprocessor = transform_with_pipe(X_train, y_train)
     evalute_alternative_methods(X_train, y_train, preprocessor)
-    tune_hyperparameters_for_best_model(X_train, X_test, y_train, y_test, preprocessor)
+    tune_hyperparameters(X_train, X_test, y_train, y_test, preprocessor)
  
 
 def transform_with_pipe(X_train, y_train):
@@ -157,24 +157,6 @@ def mean_std_cross_val_scores(model, X_train, y_train, **kwargs):
 
     return pd.Series(data=out_col, index=mean_scores.index)
 
-def mape(true, pred):
-    """
-    Calculates Mean Absolute Percentage Error
-    (Taken from UBC DSCI 573 Lecture Notes)
-    
-    Parameters
-    ----------
-    true : numpy array with actual values
-
-    pred : numpy array with predicted values
-
-    Returns
-    ----------
-        numerical value with calculated MAPE
-    """
-        
-    return 100.0 * np.mean(np.abs((pred - true) / true))
-
 def evalute_alternative_methods(X_train, y_train, preprocessor):
     """
     Performes evaluation of relevant models with screening based on the highest cross-validataion score
@@ -229,7 +211,7 @@ def evalute_alternative_methods(X_train, y_train, preprocessor):
     results_df = pd.DataFrame(results_comb)
     results_df.to_csv('results/cv_scores_for_alternative_methods.csv')
     
-def tune_hyperparameters_for_best_model(X_train, X_test, y_train, y_test, preprocessor):
+def tune_hyperparameters(X_train, X_test, y_train, y_test, preprocessor):
     """
     Uses RandomSearchCV for hyperparameter tuning of the best model (RandomForestRegressor)
     
