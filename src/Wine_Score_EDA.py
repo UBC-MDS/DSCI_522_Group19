@@ -32,10 +32,34 @@ opt = docopt(__doc__)
 
 def main(input_file, out_dir):
     # read train_df.csv file
-    train_df=pd.read_csv(input_file)
+    train_df = pd.read_csv(input_file)
+    summary_of_missing_data(train_df, out_dir)
     figures(train_df, out_dir)
-  
 
+def summary_of_missing_data(train_df, out_dir):
+    """
+    Creates csv file with information about missing data in the dataset
+
+    Parameters
+    ----------
+    input_file :
+    train_df training data set 
+
+    Returns
+    ---------
+    csv file with summary about missing data
+    
+    """
+    na_df = train_df.isna().sum().reset_index()
+    na_df.columns = ['feature', 'number_of_missing_observations']
+    
+    try:
+        na_df.to_csv(f'{out_dir}/missing_observations_summary.csv', index=False)
+    except:
+        os.mkdir(out_dir)
+        na_df.to_csv(f'{out_dir}/missing_observations_summary.csv', index=False)
+    
+ 
 def figures(train_df, out_dir):
     """
     Creates and saves charts as images in results folder
