@@ -16,3 +16,4 @@ dependencies:
     - docopt==0.6.2
     - requests
     - imbalanced-learn
+    - imblearn
