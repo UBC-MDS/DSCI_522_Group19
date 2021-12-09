@@ -20,6 +20,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer, make_column_transformer
 from sklearn.svm import SVC, SVR
+from sklearn.dummy import DummyRegressor
 
 from sklearn.metrics import (
     accuracy_score,
@@ -184,6 +185,7 @@ def evalute_alternative_methods(X_train, y_train, preprocessor):
     }
 
     models = {
+        "DummyRegressor": DummyRegressor(),
         "Ridge": Ridge(max_iter=50),
         "SVC": SVC(),
         "OneVsRest":OneVsRestClassifier(LogisticRegression()),
