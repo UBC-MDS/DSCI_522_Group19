@@ -1,16 +1,13 @@
 # Docker file for DSCI_522_Group19_Wine_Quality_Score_Predictor
-# Group19
 
 FROM rocker/tidyverse
 
 RUN apt-get update --fix-missing
 
-USER root
-
 # install python3 & virtualenv
 RUN apt-get install -y \
-		python3-pip \
-	&& pip3 install virtualenv
+    python3-pip \
+    && pip3 install virtualenv
 
 # install anaconda & put it in the PATH
 RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
