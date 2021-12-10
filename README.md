@@ -15,11 +15,24 @@ We built a regression model using Ridge, One-Vs-Rest Logistic Regression, SVR, a
 The final report can be found [here](https://github.com/UBC-MDS/DSCI_522_Group19_Wine_Quality_Score_Predictor/blob/main/doc/Wine_Quality_Score_Predictor_report.md)
 
 ## Usage
-1. With Using Docker
+**1. Using Docker**
 
-to do after finishing the docker file
+Note: In order to run the instructions in this section, running in a unix shell (e.g., terminal or Git Bash) is required. 
 
-2. Without Using Docker
+To replicate the analysis, install the [Docker]() on your PC, then clone the GitHub repository and run the following commands at the terminal/command line from the root directory of this project:
+
+```
+place holder #1
+```
+
+To reset the repo to a clean state, please run the following commands at the terminal/command line from the root directory of this project:
+
+```
+place holder #1
+```
+
+**2. Using `Make`**
+
 To replicate the analysis, clone this GitHub repository, install the [dependencies](#dependencies) listed below, and run the following commands from the main directory of the project:
 ```
 make all
