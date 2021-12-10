@@ -15,7 +15,8 @@ We built a regression model using Ridge, One-Vs-Rest Logistic Regression, SVR, a
 The final report can be found [here](https://github.com/UBC-MDS/DSCI_522_Group19_Wine_Quality_Score_Predictor/blob/main/doc/Wine_Quality_Score_Predictor_report.md)
 
 ## Usage
-1.With Using Docker
+1. With Using Docker
+
 to do after finishing the docker file
 
 2. Without Using Docker
