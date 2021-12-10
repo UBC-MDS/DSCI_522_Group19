@@ -19,7 +19,7 @@ import numpy as np
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer, make_column_transformer
-from sklearn.svm import SVC, SVR
+from sklearn.svm import SVR
 from sklearn.dummy import DummyRegressor
 
 from sklearn.metrics import (
@@ -158,6 +158,24 @@ def mean_std_cross_val_scores(model, X_train, y_train, **kwargs):
 
     return pd.Series(data=out_col, index=mean_scores.index)
 
+def mape(true, pred):
+    """
+    Calculates Mean Absolute Percentage Error
+    (Taken from UBC DSCI 573 Lecture Notes)
+    
+    Parameters
+    ----------
+    true : numpy array with actual values
+
+    pred : numpy array with predicted values
+
+    Returns
+    ----------
+        numerical value with calculated MAPE
+    """
+        
+    return 100.0 * np.mean(np.abs((pred - true) / true))
+
 def evalute_alternative_methods(X_train, y_train, preprocessor):
     """
     Performes evaluation of relevant models with screening based on the highest cross-validataion score
@@ -187,9 +205,8 @@ def evalute_alternative_methods(X_train, y_train, preprocessor):
     models = {
         "DummyRegressor": DummyRegressor(),
         "Ridge": Ridge(max_iter=50),
-        "SVC": SVC(),
-        "OneVsRest":OneVsRestClassifier(LogisticRegression()),
-        "Random Forest": RandomForestRegressor(random_state=123)
+        "SVR": SVR(),
+        "RandomForestRegressor": RandomForestRegressor(random_state=123)
     }
     
     results_comb={}
