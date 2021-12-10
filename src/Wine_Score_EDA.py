@@ -56,7 +56,7 @@ def summary_of_missing_data(train_df, out_dir):
     try:
         na_df.to_csv(f'{out_dir}/missing_observations_summary.csv', index=False)
     except:
-        os.mkdir(out_dir)
+        os.makedirs(out_dir, exist_ok=True)
         na_df.to_csv(f'{out_dir}/missing_observations_summary.csv', index=False)
     
  
@@ -133,7 +133,7 @@ def figures(train_df, out_dir):
         repeat_plots.save(f'{out_dir}/repeat_plots.png')
         cor_plot.save(f'{out_dir}/cor_plot.png')
     except:
-        os.mkdir(out_dir)
+        os.makedirs(out_dir, exist_ok=True)
         quality_fig.save(f'{out_dir}/quality_dist.png')
         repeat_plots.save(f'{out_dir}/repeat_plots.png')
         cor_plot.save(f'{out_dir}/cor_plot.png')
