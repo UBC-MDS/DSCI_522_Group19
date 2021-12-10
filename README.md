@@ -21,12 +21,6 @@ Note: In order to run the instructions in this section, a unix shell (e.g., term
 
 To replicate the analysis, install the [Docker](https://www.docker.com/get-started) on your PC, then clone the GitHub repository and run the following commands at the terminal/command line from the root directory of this project:
 
-Run Docker pull command:
-
-```
-docker pull plevchen/522_group19
-```
-
 For Windows:
 ```
 docker run --rm -v /$(pwd)://home//rstudio//wine_predictor plevchen/522_group19:latest make -C //home//rstudio//wine_predictor all
