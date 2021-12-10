@@ -35,7 +35,8 @@ RUN conda install docopt \
     scikit-learn>=1.0 \
     pandas>=1.3.* \
     pandas-profiling>=1.4.3
-
+    
+RUN conda install -c conda-forge vega-cli vega-lite-cli
 
 RUN conda install -y pip
 
