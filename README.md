@@ -19,7 +19,7 @@ The final report can be found [here](https://github.com/UBC-MDS/DSCI_522_Group19
 
 Note: In order to run the instructions in this section, a unix shell (e.g., terminal or Git Bash) is required. 
 
-To replicate the analysis, install the [Docker]() on your PC, then clone the GitHub repository and run the following commands at the terminal/command line from the root directory of this project:
+To replicate the analysis, install the [Docker](https://www.docker.com/get-started) on your PC, then clone the GitHub repository and run the following commands at the terminal/command line from the root directory of this project:
 
 ```
 place holder #1
