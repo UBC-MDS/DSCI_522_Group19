@@ -208,7 +208,7 @@ pre code {
 
 <div id="summary" class="section level1">
 <h1>Summary</h1>
-<p>In this project we aim to predict the wine quality scores ranging from 0 to 10 based on physicochemical properties of wines sensory tests. To answer this predictive question, we decided to build a regression model. Through our exploratory data analysis we analyzed the distribution of each feature and correlation between features and the target. Followed by the cross-validation process based on feature input, we concluded that the Random Forest Regressor delivers a much higher training score, but there was a clear problem of overfitting. We further conducted feature selection and hyperparameter optimization in an attempt to reduce the score gap between train and test scores. We were able to drop a number of features but maintain a relatively similar score through this process. Unfortunately, the test score with our best hyperparameters was only around 0.532, which is fairly acceptable. Next, we can potentially improve our model prediction score by using a larger dataset with more features or build a higher score model with its best hyperparameters.</p>
+<p>In this project we aim to predict the wine quality scores ranging from 0 to 10 based on physicochemical properties of wines sensory tests. To answer this predictive question, we decided to build a regression model. Through our exploratory data analysis we analyzed the distribution of each feature and correlation between features and the target. Followed by the cross-validation process based on feature input, we concluded that the Random Forest Regressor delivers a much higher training score, but there was a clear problem of overfitting. We further conducted feature selection and hyperparameter optimization in an attempt to reduce the score gap between train and validation test scores. We were able to drop a number of features but maintain a relatively similar score through this process. Unfortunately, the test score with our best hyperparameters was only around 0.532, which is fairly acceptable. Next, we can potentially improve our model prediction score by using a larger dataset with more features or build a higher score model with its best hyperparameters.</p>
 </div>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
@@ -219,7 +219,7 @@ pre code {
 <h1>Methods</h1>
 <div id="data" class="section level2">
 <h2>Data</h2>
-<p>The dataset used in this project is retrieved from the University of California Irvine (UCI) machine learning repository <span class="citation">(Dua and Graff 2017)</span> and was collected by Paulo Cortez, University of Minho, Guimarães, Portugal and A. Cerdeira, F. Almeida, T. Matos with help from J. Reis, Viticulture Commission of the Vinho Verde Region(CVRVV), Porto, Portugal in 2009. This dataset contains the results of various physiochemical test, including scoring for properties like fixed acidity, volatile acidity, citric acid, residual sugar, chlorides, free sulfur dioxide, total sulfur dioxide, density, pH, sulphates, and alcohol (11 features), which were preformed on white “Vinho Verde” wine samples from Northern Portugal. The data used in our analysis can be found <a href="https://archive.ics.uci.edu/ml/datasets/wine+quality">here</a>. Additionally, we add one more feature by concatenating white and red wine data, and so there is a binary feature; we think potentially human’s perception of wine type may affect the independent scoring on the wine quality, and so we added a binary feature to account for this factor. Thus, there are 5197 instances and 12 features upon we combined both red and white wine data.</p>
+<p>The dataset used in this project is retrieved from the University of California Irvine (UCI) machine learning repository <span class="citation">(Dua and Graff 2017)</span> and was collected by Paulo Cortez, University of Minho, Guimarães, Portugal and A. Cerdeira, F. Almeida, T. Matos with help from J. Reis, Viticulture Commission of the Vinho Verde Region(CVRVV), Porto, Portugal in 2009. This dataset contains the results of various physiochemical test, including scoring for properties like fixed acidity, volatile acidity, citric acid, residual sugar, chlorides, free sulfur dioxide, total sulfur dioxide, density, pH, sulphates, and alcohol (11 features), which were preformed on white “Vinho Verde” wine samples from Northern Portugal. The data used in our analysis can be found <a href="https://archive.ics.uci.edu/ml/datasets/wine+quality">here</a>. Additionally, we add one more feature by concatenating white and red wine data, and so there is a binary feature; we think potentially human’s perception of wine type may affect the independent scoring on the wine quality, and so we added a binary feature to account for this factor. Thus, there are 5197 instances and 12 features upon we combined both red and white wine data. There are not misssing data in this dataset, which is demonstrated with summary in the “results” folder.</p>
 <p>One of drawback of our raw data is that there is no additional feature or specific branding of each wine available in the dataset for privacy purposes. Each row in the dataset represents a single wine which was tested and scored based on human sensory data.</p>
 </div>
 <div id="analysis" class="section level2">
@@ -245,114 +245,114 @@ Figure 2. Data distribution of numeric features in training datasets.
 Figure 3. Quality distribution of wines in the training and test datasets.
 </p>
 </div>
-<p>Furthemore, the data was processed through the pandas package; EDA was plotted using python the library Altair and the preliminary insights on EDA was using the pandas-profiling package <span class="citation">(team 2020)</span> <span class="citation">(Brugman 2019)</span>. This report was compiled using an R document file with scripts running via the docopt package <span class="citation">(R Core Team 2019)</span>, <span class="citation">(de Jonge 2020)</span>. Tables were stored via csv files and displayed using knitr’s kable function <span class="citation">(Xie 2020)</span>, <span class="citation">(Allaire et al. 2020)</span>. After tuning the model, we will use test data set to do the final check of the accuracy. If the result is not satisfactory, we will make further adjustments based on the new issue found.</p>
+<p>Furthemore, the data was processed through the pandas package; EDA was plotted using python the library Altair and the preliminary insight on EDA was using the pandas-profiling package <span class="citation">(team 2020)</span> <span class="citation">(Brugman 2019)</span>. This report was compiled using an R document file with scripts running via the docopt package <span class="citation">(R Core Team 2019)</span>, <span class="citation">(de Jonge 2020)</span>. Tables were stored via csv files and displayed using knitr’s kable function <span class="citation">(Xie 2020)</span>, <span class="citation">(Allaire et al. 2020)</span>. After tuning the model, we will use test data set to do the final check of the accuracy. If the result is not satisfactory, we will make further adjustments based on the new issue found.</p>
 </div>
 </div>
 <div id="results-discussion" class="section level1">
 <h1>Results &amp; Discussion</h1>
-<p>After we decided to approach our problem as regression issue, we chose four typical regression supervised machine learning models <code>Ridge</code>, <code>OneVsRestClassifier(LogisticRegression)</code>, <code>SVR</code>, and <code>RandomForestRegressor</code><span class="citation">(Van Rossum and Drake 2009)</span>, <span class="citation">(Pedregosa et al. 2011)</span>. To better understand the performance of our selected models, we decided to evaluate negative mean squared error, negative root mean squared error, negative mean absolute error, r squared and MAPE scores given this is a regression issue with multiple feature coefficients. The cross-validation scores for each model is summarized in the Table 1. We discovered that <code>RandomForestRegressor</code> returned the highest cross-validation score, and so next we decided to further tune the <code>RandomForestRegressor</code> model via feature selection and hyper-parameter optimization to address the issue of overfitting.</p>
+<p>After we decided to approach our problem as regression issue, we chose common regression supervised machine learning models <code>Dummyregressor</code> (our baseline model), <code>Ridge</code>, <code>SVR</code>, and <code>RandomForestRegressor</code><span class="citation">(Van Rossum and Drake 2009)</span>, <span class="citation">(Pedregosa et al. 2011)</span>. To better understand the performance of our selected models, we decided to evaluate negative mean squared error, negative root mean squared error, negative mean absolute error and r squared scores given this is a regression issue with multiple feature coefficients. The cross-validation scores for each model is summarized in the Table 1. We discovered that <code>RandomForestRegressor</code> returned the highest cross-validation score, and so next we decided to further tune the <code>RandomForestRegressor</code> model via feature selection and hyper-parameter optimization to address the issue of overfitting.</p>
 <p>Moreover there is an issue of imbalanced dataset. This bias in the training dataset can influence many machine learning algorithms, leading some to ignore the minority class entirely. This is a problem as it is typically the minority class on which predictions are most important. One approach to addressing the problem of class imbalance is to randomly resample the training dataset, and thus we determined <code>RandomOverSampler(sampling_strategy=&quot;minority&quot;)</code>to address this issue.</p>
 <p>Lastly, we applied Recursive Features Elimination (RFE) for preliminary feature selections, and limited the number of features as 10 in order to make the model more efficient. Through this algorithm we determined to drop <code>type</code> and <code>density</code> features, and we are able to achieve very similar scores with lesser features as displayed in the Table 1. This process simplifies our model and it’s cost-efficient for future data collection.</p>
-<table>
+<table style="width:100%;">
 <caption>Table 1. Table of cross-validation results for each tested model</caption>
 <colgroup>
-<col width="26%" />
+<col width="25%" />
 <col width="14%" />
 <col width="14%" />
 <col width="14%" />
-<col width="14%" />
+<col width="16%" />
 <col width="14%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left">…1</th>
+<th align="left">Item</th>
+<th align="left">DummyRegressor</th>
 <th align="left">Ridge</th>
-<th align="left">SVC</th>
-<th align="left">OneVsRest</th>
-<th align="left">Random Forest</th>
+<th align="left">SVR</th>
+<th align="left">RandomForestRegressor</th>
 <th align="left">Random Forest_rfe</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">fit_time</td>
-<td align="left">0.026 (+/- 0.009)</td>
-<td align="left">2.470 (+/- 0.068)</td>
-<td align="left">0.267 (+/- 0.026)</td>
-<td align="left">4.304 (+/- 0.028)</td>
-<td align="left">16.577 (+/- 0.170)</td>
+<td align="left">0.048 (+/- 0.002)</td>
+<td align="left">0.058 (+/- 0.010)</td>
+<td align="left">3.242 (+/- 0.067)</td>
+<td align="left">4.694 (+/- 0.044)</td>
+<td align="left">17.580 (+/- 0.233)</td>
 </tr>
 <tr class="even">
 <td align="left">score_time</td>
-<td align="left">0.012 (+/- 0.002)</td>
-<td align="left">0.985 (+/- 0.030)</td>
-<td align="left">0.012 (+/- 0.002)</td>
-<td align="left">0.064 (+/- 0.002)</td>
-<td align="left">0.062 (+/- 0.003)</td>
+<td align="left">0.018 (+/- 0.001)</td>
+<td align="left">0.024 (+/- 0.005)</td>
+<td align="left">0.899 (+/- 0.014)</td>
+<td align="left">0.068 (+/- 0.001)</td>
+<td align="left">0.070 (+/- 0.004)</td>
 </tr>
 <tr class="odd">
 <td align="left">test_neg_mean_squared_error</td>
-<td align="left">-0.542 (+/- 0.034)</td>
-<td align="left">-0.587 (+/- 0.016)</td>
-<td align="left">-0.648 (+/- 0.006)</td>
-<td align="left">-0.395 (+/- 0.027)</td>
-<td align="left">-0.395 (+/- 0.031)</td>
+<td align="left">-1.696 (+/- 0.095)</td>
+<td align="left">-1.095 (+/- 0.093)</td>
+<td align="left">-0.503 (+/- 0.018)</td>
+<td align="left">-0.402 (+/- 0.030)</td>
+<td align="left">-0.404 (+/- 0.030)</td>
 </tr>
 <tr class="even">
 <td align="left">train_neg_mean_squared_error</td>
-<td align="left">-0.536 (+/- 0.009)</td>
-<td align="left">-0.542 (+/- 0.007)</td>
-<td align="left">-0.642 (+/- 0.005)</td>
-<td align="left">-0.056 (+/- 0.002)</td>
-<td align="left">-0.056 (+/- 0.002)</td>
+<td align="left">-1.696 (+/- 0.004)</td>
+<td align="left">-1.074 (+/- 0.050)</td>
+<td align="left">-0.427 (+/- 0.013)</td>
+<td align="left">-0.057 (+/- 0.001)</td>
+<td align="left">-0.057 (+/- 0.001)</td>
 </tr>
 <tr class="odd">
 <td align="left">test_neg_root_mean_squared_error</td>
-<td align="left">-0.736 (+/- 0.023)</td>
-<td align="left">-0.766 (+/- 0.010)</td>
-<td align="left">-0.805 (+/- 0.004)</td>
-<td align="left">-0.628 (+/- 0.021)</td>
-<td align="left">-0.628 (+/- 0.025)</td>
+<td align="left">-1.302 (+/- 0.036)</td>
+<td align="left">-1.046 (+/- 0.045)</td>
+<td align="left">-0.709 (+/- 0.013)</td>
+<td align="left">-0.634 (+/- 0.023)</td>
+<td align="left">-0.635 (+/- 0.024)</td>
 </tr>
 <tr class="even">
 <td align="left">train_neg_root_mean_squared_error</td>
-<td align="left">-0.732 (+/- 0.006)</td>
-<td align="left">-0.736 (+/- 0.005)</td>
-<td align="left">-0.801 (+/- 0.003)</td>
-<td align="left">-0.237 (+/- 0.003)</td>
-<td align="left">-0.238 (+/- 0.003)</td>
+<td align="left">-1.302 (+/- 0.002)</td>
+<td align="left">-1.036 (+/- 0.024)</td>
+<td align="left">-0.654 (+/- 0.010)</td>
+<td align="left">-0.239 (+/- 0.003)</td>
+<td align="left">-0.239 (+/- 0.003)</td>
 </tr>
 <tr class="odd">
 <td align="left">test_neg_mean_absolute_error</td>
-<td align="left">-0.570 (+/- 0.015)</td>
-<td align="left">-0.480 (+/- 0.010)</td>
-<td align="left">-0.520 (+/- 0.003)</td>
-<td align="left">-0.450 (+/- 0.012)</td>
-<td align="left">-0.451 (+/- 0.015)</td>
+<td align="left">-1.115 (+/- 0.028)</td>
+<td align="left">-0.807 (+/- 0.024)</td>
+<td align="left">-0.532 (+/- 0.009)</td>
+<td align="left">-0.457 (+/- 0.015)</td>
+<td align="left">-0.458 (+/- 0.015)</td>
 </tr>
 <tr class="even">
 <td align="left">train_neg_mean_absolute_error</td>
-<td align="left">-0.567 (+/- 0.004)</td>
-<td align="left">-0.441 (+/- 0.004)</td>
-<td align="left">-0.514 (+/- 0.002)</td>
-<td align="left">-0.169 (+/- 0.002)</td>
-<td align="left">-0.169 (+/- 0.002)</td>
+<td align="left">-1.115 (+/- 0.001)</td>
+<td align="left">-0.803 (+/- 0.022)</td>
+<td align="left">-0.474 (+/- 0.004)</td>
+<td align="left">-0.170 (+/- 0.001)</td>
+<td align="left">-0.170 (+/- 0.001)</td>
 </tr>
 <tr class="odd">
 <td align="left">test_r2</td>
-<td align="left">0.289 (+/- 0.029)</td>
-<td align="left">0.231 (+/- 0.020)</td>
-<td align="left">0.150 (+/- 0.006)</td>
-<td align="left">0.482 (+/- 0.027)</td>
-<td align="left">0.481 (+/- 0.032)</td>
+<td align="left">-1.226 (+/- 0.089)</td>
+<td align="left">-0.439 (+/- 0.137)</td>
+<td align="left">0.339 (+/- 0.019)</td>
+<td align="left">0.472 (+/- 0.027)</td>
+<td align="left">0.470 (+/- 0.029)</td>
 </tr>
 <tr class="even">
 <td align="left">train_r2</td>
-<td align="left">0.298 (+/- 0.007)</td>
-<td align="left">0.290 (+/- 0.011)</td>
-<td align="left">0.158 (+/- 0.008)</td>
-<td align="left">0.926 (+/- 0.002)</td>
-<td align="left">0.926 (+/- 0.002)</td>
+<td align="left">-1.224 (+/- 0.013)</td>
+<td align="left">-0.408 (+/- 0.066)</td>
+<td align="left">0.440 (+/- 0.016)</td>
+<td align="left">0.925 (+/- 0.002)</td>
+<td align="left">0.925 (+/- 0.002)</td>
 </tr>
 </tbody>
 </table>

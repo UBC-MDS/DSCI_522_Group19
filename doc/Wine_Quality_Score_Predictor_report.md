@@ -9,9 +9,9 @@ by the cross-validation process based on feature input, we concluded
 that the Random Forest Regressor delivers a much higher training score,
 but there was a clear problem of overfitting. We further conducted
 feature selection and hyperparameter optimization in an attempt to
-reduce the score gap between train and test scores. We were able to drop
-a number of features but maintain a relatively similar score through
-this process. Unfortunately, the test score with our best
+reduce the score gap between train and validation test scores. We were
+able to drop a number of features but maintain a relatively similar
+score through this process. Unfortunately, the test score with our best
 hyperparameters was only around 0.532, which is fairly acceptable. Next,
 we can potentially improve our model prediction score by using a larger
 dataset with more features or build a higher score model with its best
@@ -67,7 +67,8 @@ wine data, and so there is a binary feature; we think potentially
 human’s perception of wine type may affect the independent scoring on
 the wine quality, and so we added a binary feature to account for this
 factor. Thus, there are 5197 instances and 12 features upon we combined
-both red and white wine data.
+both red and white wine data. There are not misssing data in this
+dataset, which is demonstrated with summary in the “results” folder.
 
 One of drawback of our raw data is that there is no additional feature
 or specific branding of each wine available in the dataset for privacy
@@ -118,7 +119,7 @@ datasets.
 </p>
 
 Furthemore, the data was processed through the pandas package; EDA was
-plotted using python the library Altair and the preliminary insights on
+plotted using python the library Altair and the preliminary insight on
 EDA was using the pandas-profiling package (team 2020) (Brugman 2019).
 This report was compiled using an R document file with scripts running
 via the docopt package (R Core Team 2019), (de Jonge 2020). Tables were
@@ -131,18 +132,18 @@ found.
 # Results & Discussion
 
 After we decided to approach our problem as regression issue, we chose
-four typical regression supervised machine learning models `Ridge`,
-`OneVsRestClassifier(LogisticRegression)`, `SVR`, and
-`RandomForestRegressor`(Van Rossum and Drake 2009), (Pedregosa et al.
-2011). To better understand the performance of our selected models, we
-decided to evaluate negative mean squared error, negative root mean
-squared error, negative mean absolute error, r squared and MAPE scores
-given this is a regression issue with multiple feature coefficients. The
-cross-validation scores for each model is summarized in the Table 1. We
-discovered that `RandomForestRegressor` returned the highest
-cross-validation score, and so next we decided to further tune the
-`RandomForestRegressor` model via feature selection and hyper-parameter
-optimization to address the issue of overfitting.
+common regression supervised machine learning models `Dummyregressor`
+(our baseline model), `Ridge`, `SVR`, and `RandomForestRegressor`(Van
+Rossum and Drake 2009), (Pedregosa et al. 2011). To better understand
+the performance of our selected models, we decided to evaluate negative
+mean squared error, negative root mean squared error, negative mean
+absolute error and r squared scores given this is a regression issue
+with multiple feature coefficients. The cross-validation scores for each
+model is summarized in the Table 1. We discovered that
+`RandomForestRegressor` returned the highest cross-validation score, and
+so next we decided to further tune the `RandomForestRegressor` model via
+feature selection and hyper-parameter optimization to address the issue
+of overfitting.
 
 Moreover there is an issue of imbalanced dataset. This bias in the
 training dataset can influence many machine learning algorithms, leading
@@ -160,106 +161,106 @@ similar scores with lesser features as displayed in the Table 1. This
 process simplifies our model and it’s cost-efficient for future data
 collection.
 
-<table>
+<table style="width:100%;">
 <caption>Table 1. Table of cross-validation results for each tested model</caption>
 <colgroup>
-<col style="width: 26%" />
+<col style="width: 25%" />
 <col style="width: 14%" />
 <col style="width: 14%" />
 <col style="width: 14%" />
-<col style="width: 14%" />
+<col style="width: 16%" />
 <col style="width: 14%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">…1</th>
+<th style="text-align: left;">Item</th>
+<th style="text-align: left;">DummyRegressor</th>
 <th style="text-align: left;">Ridge</th>
-<th style="text-align: left;">SVC</th>
-<th style="text-align: left;">OneVsRest</th>
-<th style="text-align: left;">Random Forest</th>
+<th style="text-align: left;">SVR</th>
+<th style="text-align: left;">RandomForestRegressor</th>
 <th style="text-align: left;">Random Forest_rfe</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">fit_time</td>
-<td style="text-align: left;">0.026 (+/- 0.009)</td>
-<td style="text-align: left;">2.470 (+/- 0.068)</td>
-<td style="text-align: left;">0.267 (+/- 0.026)</td>
-<td style="text-align: left;">4.304 (+/- 0.028)</td>
-<td style="text-align: left;">16.577 (+/- 0.170)</td>
+<td style="text-align: left;">0.048 (+/- 0.002)</td>
+<td style="text-align: left;">0.058 (+/- 0.010)</td>
+<td style="text-align: left;">3.242 (+/- 0.067)</td>
+<td style="text-align: left;">4.694 (+/- 0.044)</td>
+<td style="text-align: left;">17.580 (+/- 0.233)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">score_time</td>
-<td style="text-align: left;">0.012 (+/- 0.002)</td>
-<td style="text-align: left;">0.985 (+/- 0.030)</td>
-<td style="text-align: left;">0.012 (+/- 0.002)</td>
-<td style="text-align: left;">0.064 (+/- 0.002)</td>
-<td style="text-align: left;">0.062 (+/- 0.003)</td>
+<td style="text-align: left;">0.018 (+/- 0.001)</td>
+<td style="text-align: left;">0.024 (+/- 0.005)</td>
+<td style="text-align: left;">0.899 (+/- 0.014)</td>
+<td style="text-align: left;">0.068 (+/- 0.001)</td>
+<td style="text-align: left;">0.070 (+/- 0.004)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">test_neg_mean_squared_error</td>
-<td style="text-align: left;">-0.542 (+/- 0.034)</td>
-<td style="text-align: left;">-0.587 (+/- 0.016)</td>
-<td style="text-align: left;">-0.648 (+/- 0.006)</td>
-<td style="text-align: left;">-0.395 (+/- 0.027)</td>
-<td style="text-align: left;">-0.395 (+/- 0.031)</td>
+<td style="text-align: left;">-1.696 (+/- 0.095)</td>
+<td style="text-align: left;">-1.095 (+/- 0.093)</td>
+<td style="text-align: left;">-0.503 (+/- 0.018)</td>
+<td style="text-align: left;">-0.402 (+/- 0.030)</td>
+<td style="text-align: left;">-0.404 (+/- 0.030)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">train_neg_mean_squared_error</td>
-<td style="text-align: left;">-0.536 (+/- 0.009)</td>
-<td style="text-align: left;">-0.542 (+/- 0.007)</td>
-<td style="text-align: left;">-0.642 (+/- 0.005)</td>
-<td style="text-align: left;">-0.056 (+/- 0.002)</td>
-<td style="text-align: left;">-0.056 (+/- 0.002)</td>
+<td style="text-align: left;">-1.696 (+/- 0.004)</td>
+<td style="text-align: left;">-1.074 (+/- 0.050)</td>
+<td style="text-align: left;">-0.427 (+/- 0.013)</td>
+<td style="text-align: left;">-0.057 (+/- 0.001)</td>
+<td style="text-align: left;">-0.057 (+/- 0.001)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">test_neg_root_mean_squared_error</td>
-<td style="text-align: left;">-0.736 (+/- 0.023)</td>
-<td style="text-align: left;">-0.766 (+/- 0.010)</td>
-<td style="text-align: left;">-0.805 (+/- 0.004)</td>
-<td style="text-align: left;">-0.628 (+/- 0.021)</td>
-<td style="text-align: left;">-0.628 (+/- 0.025)</td>
+<td style="text-align: left;">-1.302 (+/- 0.036)</td>
+<td style="text-align: left;">-1.046 (+/- 0.045)</td>
+<td style="text-align: left;">-0.709 (+/- 0.013)</td>
+<td style="text-align: left;">-0.634 (+/- 0.023)</td>
+<td style="text-align: left;">-0.635 (+/- 0.024)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">train_neg_root_mean_squared_error</td>
-<td style="text-align: left;">-0.732 (+/- 0.006)</td>
-<td style="text-align: left;">-0.736 (+/- 0.005)</td>
-<td style="text-align: left;">-0.801 (+/- 0.003)</td>
-<td style="text-align: left;">-0.237 (+/- 0.003)</td>
-<td style="text-align: left;">-0.238 (+/- 0.003)</td>
+<td style="text-align: left;">-1.302 (+/- 0.002)</td>
+<td style="text-align: left;">-1.036 (+/- 0.024)</td>
+<td style="text-align: left;">-0.654 (+/- 0.010)</td>
+<td style="text-align: left;">-0.239 (+/- 0.003)</td>
+<td style="text-align: left;">-0.239 (+/- 0.003)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">test_neg_mean_absolute_error</td>
-<td style="text-align: left;">-0.570 (+/- 0.015)</td>
-<td style="text-align: left;">-0.480 (+/- 0.010)</td>
-<td style="text-align: left;">-0.520 (+/- 0.003)</td>
-<td style="text-align: left;">-0.450 (+/- 0.012)</td>
-<td style="text-align: left;">-0.451 (+/- 0.015)</td>
+<td style="text-align: left;">-1.115 (+/- 0.028)</td>
+<td style="text-align: left;">-0.807 (+/- 0.024)</td>
+<td style="text-align: left;">-0.532 (+/- 0.009)</td>
+<td style="text-align: left;">-0.457 (+/- 0.015)</td>
+<td style="text-align: left;">-0.458 (+/- 0.015)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">train_neg_mean_absolute_error</td>
-<td style="text-align: left;">-0.567 (+/- 0.004)</td>
-<td style="text-align: left;">-0.441 (+/- 0.004)</td>
-<td style="text-align: left;">-0.514 (+/- 0.002)</td>
-<td style="text-align: left;">-0.169 (+/- 0.002)</td>
-<td style="text-align: left;">-0.169 (+/- 0.002)</td>
+<td style="text-align: left;">-1.115 (+/- 0.001)</td>
+<td style="text-align: left;">-0.803 (+/- 0.022)</td>
+<td style="text-align: left;">-0.474 (+/- 0.004)</td>
+<td style="text-align: left;">-0.170 (+/- 0.001)</td>
+<td style="text-align: left;">-0.170 (+/- 0.001)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">test_r2</td>
-<td style="text-align: left;">0.289 (+/- 0.029)</td>
-<td style="text-align: left;">0.231 (+/- 0.020)</td>
-<td style="text-align: left;">0.150 (+/- 0.006)</td>
-<td style="text-align: left;">0.482 (+/- 0.027)</td>
-<td style="text-align: left;">0.481 (+/- 0.032)</td>
+<td style="text-align: left;">-1.226 (+/- 0.089)</td>
+<td style="text-align: left;">-0.439 (+/- 0.137)</td>
+<td style="text-align: left;">0.339 (+/- 0.019)</td>
+<td style="text-align: left;">0.472 (+/- 0.027)</td>
+<td style="text-align: left;">0.470 (+/- 0.029)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">train_r2</td>
-<td style="text-align: left;">0.298 (+/- 0.007)</td>
-<td style="text-align: left;">0.290 (+/- 0.011)</td>
-<td style="text-align: left;">0.158 (+/- 0.008)</td>
-<td style="text-align: left;">0.926 (+/- 0.002)</td>
-<td style="text-align: left;">0.926 (+/- 0.002)</td>
+<td style="text-align: left;">-1.224 (+/- 0.013)</td>
+<td style="text-align: left;">-0.408 (+/- 0.066)</td>
+<td style="text-align: left;">0.440 (+/- 0.016)</td>
+<td style="text-align: left;">0.925 (+/- 0.002)</td>
+<td style="text-align: left;">0.925 (+/- 0.002)</td>
 </tr>
 </tbody>
 </table>

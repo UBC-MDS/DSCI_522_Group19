@@ -3,11 +3,11 @@ title: "Predicting wine quality score from various characteristics"
 author: "Group 19 - Kingslin Lv, Manju Neervaram Abhinandana Kumar, Zack Tang, Paval Levchenko"
 bibliography: references_wine_score_predictor.bib
 output: 
+  html_document: 
+    toc: true
   md_document: 
     toc: true
   github_document:
-    toc: true
-  html_document: 
     toc: true
 ---
 
@@ -22,7 +22,7 @@ final_results_df <- read_csv("../results/final_results.csv")
 
 # Summary
 
-In this project we aim to predict the wine quality scores ranging from 0 to 10 based on physicochemical properties of wines sensory tests. To answer this predictive question, we decided to build a regression model. Through our exploratory data analysis we analyzed the distribution of each feature and correlation between features and the target. Followed by the cross-validation process based on feature input, we concluded that the Random Forest Regressor delivers a much higher training score, but there was a clear problem of overfitting. We further conducted feature selection and hyperparameter optimization in an attempt to reduce the score gap between train and test scores. We were able to drop a number of features but maintain a relatively similar score through this process. Unfortunately, the test score with our best hyperparameters was only around `r final_results_df[[6,2]]`, which is fairly acceptable. Next, we can potentially improve our model prediction score by using a larger dataset with more features or build a higher score model with its best hyperparameters.
+In this project we aim to predict the wine quality scores ranging from 0 to 10 based on physicochemical properties of wines sensory tests. To answer this predictive question, we decided to build a regression model. Through our exploratory data analysis we analyzed the distribution of each feature and correlation between features and the target. Followed by the cross-validation process based on feature input, we concluded that the Random Forest Regressor delivers a much higher training score, but there was a clear problem of overfitting. We further conducted feature selection and hyperparameter optimization in an attempt to reduce the score gap between train and validation test scores. We were able to drop a number of features but maintain a relatively similar score through this process. Unfortunately, the test score with our best hyperparameters was only around `r final_results_df[[6,2]]`, which is fairly acceptable. Next, we can potentially improve our model prediction score by using a larger dataset with more features or build a higher score model with its best hyperparameters.
 
 # Introduction
 
@@ -58,11 +58,11 @@ By exploring the features correlation matrix Figure 3, we identified that some f
 knitr::include_graphics("../results/cor_plot.png")
 ```
 
-Furthemore, the data was processed through the pandas package; EDA was plotted using python the library Altair and the preliminary insights on EDA was using the pandas-profiling package [@reback2020pandas] [@pandasprofiling2019]. This report was compiled using an R document file with scripts running via the docopt package [@R], [@docopt]. Tables were stored via csv files and displayed using knitr's kable function [@knitr], [@rmarkdown]. After tuning the model, we will use test data set to do the final check of the accuracy. If the result is not satisfactory, we will make further adjustments based on the new issue found.
+Furthemore, the data was processed through the pandas package; EDA was plotted using python the library Altair and the preliminary insight on EDA was using the pandas-profiling package [@reback2020pandas] [@pandasprofiling2019]. This report was compiled using an R document file with scripts running via the docopt package [@R], [@docopt]. Tables were stored via csv files and displayed using knitr's kable function [@knitr], [@rmarkdown]. After tuning the model, we will use test data set to do the final check of the accuracy. If the result is not satisfactory, we will make further adjustments based on the new issue found.
 
 # Results & Discussion
 
-After we decided to approach our problem as regression issue, we chose common regression supervised machine learning models `Ridge`, `SVR`, and `RandomForestRegressor`[@Python], [@scikit-learn]. To better understand the performance of our selected models, we decided to evaluate negative mean squared error, negative root mean squared error, negative mean absolute error and r squared scores given this is a regression issue with multiple feature coefficients. The cross-validation scores for each model is summarized in the Table 1. We discovered that `RandomForestRegressor` returned the highest cross-validation score, and so next we decided to further tune the `RandomForestRegressor` model via feature selection and hyper-parameter optimization to address the issue of overfitting.
+After we decided to approach our problem as regression issue, we chose common regression supervised machine learning models `Dummyregressor` (our baseline model), `Ridge`, `SVR`, and `RandomForestRegressor`[@Python], [@scikit-learn]. To better understand the performance of our selected models, we decided to evaluate negative mean squared error, negative root mean squared error, negative mean absolute error and r squared scores given this is a regression issue with multiple feature coefficients. The cross-validation scores for each model is summarized in the Table 1. We discovered that `RandomForestRegressor` returned the highest cross-validation score, and so next we decided to further tune the `RandomForestRegressor` model via feature selection and hyper-parameter optimization to address the issue of overfitting.
 
 Moreover there is an issue of imbalanced dataset. This bias in the training dataset can influence many machine learning algorithms, leading some to ignore the minority class entirely. This is a problem as it is typically the minority class on which predictions are most important. One approach to addressing the problem of class imbalance is to randomly resample the training dataset, and thus we determined `RandomOverSampler(sampling_strategy="minority")`to address this issue. 
 
